@@ -8,17 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════════════════
-   RESET
-════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 20px;}
 
-/* ════════════════════════════════════════════
-   THEME TOKENS
-════════════════════════════════════════════ */
 :root {
-  /* DARK — Neon Genesis / deep night */
   --bg:          #0a0c0f;
   --bg2:         #0d1017;
   --bg3:         #111520;
@@ -29,9 +22,9 @@ html { scroll-behavior: smooth; font-size: 20px;}
   --text:        #d8e4f0;
   --text2:       #8599b5;
   --text3:       #48607a;
-  --accent:      #7eb8f7;   /* soft electric blue — Rei */
-  --accent2:     #f0c0d8;   /* soft pink — Violet Evergarden */
-  --accent3:     #c9b8f5;   /* lavender — persona */
+  --accent:      #7eb8f7;
+  --accent2:     #f0c0d8;
+  --accent3:     #c9b8f5;
   --green:       #7de4b0;
   --amber:       #f5d87e;
   --mono:        'Share Tech Mono', monospace;
@@ -45,31 +38,28 @@ html { scroll-behavior: smooth; font-size: 20px;}
 }
 
 [data-theme="light"] {
-  --bg:          #f0ede8;
-  --bg2:         #ece9e3;
-  --bg3:         #e6e2db;
-  --surface:     #dedad2;
-  --surface2:    #d8d4cc;
-  --border:      rgba(80,70,60,.1);
-  --border2:     rgba(80,70,60,.22);
-  --text:        #1a1612;
-  --text2:       #5a4e42;
-  --text3:       #9a8e82;
-  --accent:      #3a6fa8;
-  --accent2:     #a0467a;
-  --accent3:     #6e56a0;
-  --green:       #2e8055;
-  --amber:       #8a6a10;
-  --glow-b:      0 0 12px rgba(58,111,168,.18);
-  --glow-p:      0 0 12px rgba(160,70,122,.18);
-  --scanline-op: .018;
-  --crt-vign:    radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,.12) 100%);
-  --noise-op:    .04;
+  --bg:          #f5f0e8;
+  --bg2:         #ede8df;
+  --bg3:         #e4ddd2;
+  --surface:     #ddd7cc;
+  --surface2:    #d5cec2;
+  --border:      rgba(90,75,60,.1);
+  --border2:     rgba(90,75,60,.22);
+  --text:        #1c1812;
+  --text2:       #5c4e3e;
+  --text3:       #9a8a78;
+  --accent:      #2a5f9a;
+  --accent2:     #a03060;
+  --accent3:     #6040a0;
+  --green:       #256040;
+  --amber:       #7a5c10;
+  --glow-b:      0 0 12px rgba(42,95,154,.18);
+  --glow-p:      0 0 12px rgba(160,48,96,.18);
+  --scanline-op: .012;
+  --crt-vign:    radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,.08) 100%);
+  --noise-op:    .025;
 }
 
-/* ════════════════════════════════════════════
-   BODY + ATMOSPHERE
-════════════════════════════════════════════ */
 body {
   background: var(--bg);
   color: var(--text);
@@ -79,7 +69,6 @@ body {
   transition: background .4s ease, color .4s ease;
 }
 
-/* CRT vignette */
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: 9990;
@@ -87,7 +76,6 @@ body::before {
   pointer-events: none;
 }
 
-/* Pixel noise overlay */
 body::after {
   content: '';
   position: fixed; inset: 0; z-index: 9991;
@@ -97,7 +85,6 @@ body::after {
   background-size: 180px 180px;
 }
 
-/* Subtle scanlines */
 .scanlines {
   position: fixed; inset: 0; z-index: 9989;
   pointer-events: none;
@@ -108,7 +95,6 @@ body::after {
   );
 }
 
-/* Grid — faint blueprint */
 .grid-bg {
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
@@ -119,9 +105,6 @@ body::after {
   transition: opacity .4s;
 }
 
-/* ════════════════════════════════════════════
-   CUSTOM CURSOR
-════════════════════════════════════════════ */
 #cur { position: fixed; pointer-events: none; z-index: 9999; }
 #cur-cross {
   width: 16px; height: 16px;
@@ -160,9 +143,6 @@ body::after {
   transform: translate(-50%,-50%);
 }
 
-/* ════════════════════════════════════════════
-   THEME TOGGLE
-════════════════════════════════════════════ */
 #themeToggle {
   position: fixed; top: 18px; right: 3rem; z-index: 200;
   background: transparent;
@@ -178,9 +158,6 @@ body::after {
 }
 #themeToggle:hover { border-color: var(--accent); color: var(--accent); }
 
-/* ════════════════════════════════════════════
-   NAV
-════════════════════════════════════════════ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: 54px;
@@ -191,7 +168,7 @@ nav {
   border-bottom: 1px solid var(--border);
   transition: background .4s;
 }
-[data-theme="light"] nav { background: rgba(240,237,232,.92); }
+[data-theme="light"] nav { background: rgba(245,240,232,.94); }
 
 .nav-logo {
   font-family: var(--mono);
@@ -226,9 +203,6 @@ nav {
 .nav-links a:hover { color: var(--text); }
 .nav-links a:hover::after { transform: scaleX(1); }
 
-/* ════════════════════════════════════════════
-   IMPACT FLASH
-════════════════════════════════════════════ */
 #impactFlash {
   position: fixed; inset: 0; z-index: 9000;
   background: rgba(126,184,247,.04);
@@ -236,23 +210,15 @@ nav {
   transition: opacity .06s;
 }
 
-/* ════════════════════════════════════════════
-   ANIMATIONS
-════════════════════════════════════════════ */
 @keyframes fadeUp    { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 @keyframes blink-cur { 0%,100%{opacity:1} 50%{opacity:0} }
 @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
 @keyframes float-up  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-@keyframes wing-beat { 0%,100%{transform:scaleY(1) rotate(-2deg)} 50%{transform:scaleY(.82) rotate(2deg)} }
 @keyframes scan-line { 0%{transform:translateY(-100%)} 100%{transform:translateY(110vh)} }
-@keyframes txt-glow  { 0%,100%{text-shadow:0 0 8px rgba(126,184,247,.0)} 50%{text-shadow:0 0 18px rgba(126,184,247,.5)} }
 
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ════════════════════════════════════════════
-   SECTIONS
-════════════════════════════════════════════ */
 section { padding: 7rem 3rem; position: relative; z-index: 2; }
 
 .section-label {
@@ -284,9 +250,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   position: relative; z-index: 2;
 }
 
-/* ════════════════════════════════════════════
-   HERO
-════════════════════════════════════════════ */
 #hero {
   min-height: 100vh;
   display: grid;
@@ -297,7 +260,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   position: relative; overflow: hidden;
 }
 
-/* Wings — Icarus motif, decorative */
 .hero-wings {
   position: absolute;
   top: 50%; right: 280px;
@@ -437,9 +399,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 .stat-num span { color: var(--accent); font-size: 1.5rem; }
 .stat-label { font-size: .55rem; color: var(--text3); text-transform: uppercase; letter-spacing: .14em; margin-top: 4px; }
 
-/* ════════════════════════════════════════════
-   SYSTEM STATUS TERMINAL (right panel hero)
-════════════════════════════════════════════ */
 .system-status {
   position: relative; z-index: 2;
   background: var(--surface);
@@ -492,9 +451,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   pointer-events: none;
 }
 
-/* ════════════════════════════════════════════
-   ABOUT — DOSSIER
-════════════════════════════════════════════ */
 #about { background: var(--bg2); }
 
 .dossier {
@@ -502,9 +458,7 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   border: 1px solid var(--border);
   position: relative; padding: 2.5rem;
 }
-.dossier-corner {
-  position: absolute; width: 16px; height: 16px;
-}
+.dossier-corner { position: absolute; width: 16px; height: 16px; }
 .dossier-corner.tl { top: -1px; left: -1px; border-top: 1px solid var(--accent2); border-left: 1px solid var(--accent2); }
 .dossier-corner.br { bottom: -1px; right: -1px; border-bottom: 1px solid var(--accent2); border-right: 1px solid var(--accent2); }
 
@@ -555,9 +509,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 .status-dot { display: inline-flex; align-items: center; gap: 7px; }
 .status-dot::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse-dot 2.2s infinite; box-shadow: 0 0 8px var(--green); }
 
-/* ════════════════════════════════════════════
-   SKILLS
-════════════════════════════════════════════ */
 #skills { background: var(--bg); }
 
 .skills-categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
@@ -597,14 +548,8 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   transition: all .18s;
 }
 .skill-tag:hover { border-color: var(--border2); color: var(--text2); }
-.skill-tag.featured {
-  border-color: rgba(201,184,245,.2);
-  color: var(--accent3);
-}
+.skill-tag.featured { border-color: rgba(201,184,245,.2); color: var(--accent3); }
 
-/* ════════════════════════════════════════════
-   EXPERIENCE — TIMELINE
-════════════════════════════════════════════ */
 #experience { background: var(--bg2); }
 
 .timeline { position: relative; padding-left: 2.5rem; }
@@ -659,9 +604,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   font-size: .58rem; font-family: var(--mono);
 }
 
-/* ════════════════════════════════════════════
-   PROJECTS
-════════════════════════════════════════════ */
 #projects { background: var(--bg); }
 
 .projects-filter { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
@@ -681,11 +623,7 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); }
 
-.card-wrap {
-  background: var(--surface);
-  padding: 0;
-  transition: background .22s;
-}
+.card-wrap { background: var(--surface); padding: 0; transition: background .22s; }
 .card-wrap:hover { background: var(--surface2); }
 
 .project-card {
@@ -736,9 +674,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 @keyframes dots-anim { 0%{content:'.'} 33%{content:'..'} 66%{content:'...'} }
 .loading-dots::after { content: '.'; animation: dots-anim 1.5s infinite; }
 
-/* ════════════════════════════════════════════
-   GITHUB
-════════════════════════════════════════════ */
 #github { background: var(--bg2); }
 
 .gh-meta { display: flex; gap: .85rem; flex-wrap: wrap; margin-bottom: 2rem; }
@@ -776,9 +711,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 .gh-repo-updated { font-size: .56rem; color: var(--text3); margin-left: auto; }
 .gh-cta { margin-top: 2rem; display: flex; justify-content: center; }
 
-/* ════════════════════════════════════════════
-   CERTIFICATIONS
-════════════════════════════════════════════ */
 #certifications { background: var(--bg); }
 
 .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1px; background: var(--border); }
@@ -810,6 +742,7 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 .cert-icon.huawei { border-color: rgba(240,192,216,.25); }
 .cert-icon.ibm    { border-color: rgba(126,184,247,.25); }
 .cert-icon.cisco  { border-color: rgba(126,184,247,.25); }
+.cert-icon.ms     { border-color: rgba(0,120,215,.25); }
 
 .cert-body { flex: 1; }
 .cert-issuer { font-size: .57rem; color: var(--accent2); text-transform: uppercase; letter-spacing: .12em; margin-bottom: .3rem; }
@@ -820,10 +753,9 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
   font-size: .57rem; color: var(--green); margin-top: .65rem;
 }
 .cert-verified svg { width: 10px; height: 10px; }
+.cert-verified a { color: var(--green); text-decoration: none; }
+.cert-verified a:hover { text-decoration: underline; }
 
-/* ════════════════════════════════════════════
-   CONTACT
-════════════════════════════════════════════ */
 #contact { background: var(--bg2); }
 
 .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
@@ -868,9 +800,6 @@ section { padding: 7rem 3rem; position: relative; z-index: 2; }
 .contact-card-label { font-size: .56rem; color: var(--text3); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 2px; }
 .contact-card-value { font-size: .8rem; color: var(--text); }
 
-/* ════════════════════════════════════════════
-   FOOTER
-════════════════════════════════════════════ */
 footer {
   padding: 1.4rem 3rem;
   border-top: 1px solid var(--border);
@@ -881,14 +810,8 @@ footer {
   transition: background .4s;
 }
 .footer-handle { color: var(--accent); letter-spacing: .14em; }
-.footer-myth {
-  font-family: var(--serif); font-style: italic;
-  font-size: .68rem; color: var(--text3);
-}
+.footer-myth { font-family: var(--serif); font-style: italic; font-size: .68rem; color: var(--text3); }
 
-/* ════════════════════════════════════════════
-   RESPONSIVE
-════════════════════════════════════════════ */
 @media (max-width: 960px) {
   #hero { grid-template-columns: 1fr; gap: 2.5rem; }
   .system-status { max-width: 100%; }
@@ -914,14 +837,11 @@ footer {
 <div class="grid-bg"></div>
 <div id="impactFlash"></div>
 
-<!-- CURSOR -->
 <div id="cur"><div id="cur-cross"><div id="cur-dot"></div></div></div>
 <div id="cur-ring"></div>
 
-<!-- THEME TOGGLE -->
 <button id="themeToggle">◐ MODE</button>
 
-<!-- NAV -->
 <nav>
   <a href="#hero" class="nav-logo">
     <span class="nav-logo-handle">Y C X R V S</span>
@@ -939,11 +859,9 @@ footer {
   </ul>
 </nav>
 
-<!-- ═══ HERO ═══ -->
 <section id="hero">
   <div class="hero-wings">✦</div>
   <div class="hero-scan"></div>
-
   <div class="hero-content">
     <div class="hero-unit">UNIT-01 · SOFTWARE ENGINEERING · CLASS 2026</div>
     <div class="hero-handle">Y C X R V S</div>
@@ -973,10 +891,9 @@ footer {
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">3<span>+</span></div><div class="stat-label">Yrs coding</div></div>
       <div class="stat"><div class="stat-num">7<span>+</span></div><div class="stat-label">Projects</div></div>
-      <div class="stat"><div class="stat-num">4<span>+</span></div><div class="stat-label">Certs</div></div>
+      <div class="stat"><div class="stat-num">7<span>+</span></div><div class="stat-label">Certs</div></div>
     </div>
   </div>
-
   <div class="system-status">
     <div class="scan-pass"></div>
     <div class="sys-header"><span class="sys-blink">◆</span>&nbsp; ICARUS_SYSTEM_STATUS</div>
@@ -994,22 +911,18 @@ footer {
 
 <div class="hud-divider"></div>
 
-<!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="section-header reveal">
     <div class="section-label">Who I am</div>
     <h2 class="section-title">Operator <em>Profile</em></h2>
   </div>
-
   <div class="dossier reveal">
     <div class="dossier-corner tl"></div>
     <div class="dossier-corner br"></div>
-
     <div class="dossier-header">
       <span class="dossier-classification">// RESTRICTED //</span>
       <span>FILE NO. YF-026-CS · UNIT: FELLAH_YOUSSEF · ʏ ᴄ x ʀ ᴠ s</span>
     </div>
-
     <div class="about-grid">
       <div class="about-text">
         <p class="lead">A builder who lives in the full lifecycle — from clean architecture diagrams to deployed production systems.</p>
@@ -1031,7 +944,6 @@ footer {
           </a>
         </div>
       </div>
-
       <div class="about-info">
         <div class="info-row"><span class="info-label">Status</span><span class="info-value"><span class="status-dot">On alternance</span></span></div>
         <div class="info-row"><span class="info-label">Location</span><span class="info-value">Casablanca, Morocco</span></div>
@@ -1046,82 +958,26 @@ footer {
 
 <div class="hud-divider"></div>
 
-<!-- ═══ SKILLS ═══ -->
 <section id="skills">
   <div class="section-header reveal">
     <div class="section-label">Arsenal</div>
     <h2 class="section-title">Technical <em>Stack</em></h2>
   </div>
   <div class="skills-categories reveal">
-    <div class="skill-cat">
-      <div class="skill-cat-icon">⚙️</div>
-      <div class="skill-cat-name">Backend &amp; Core</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">Java</span><span class="skill-tag featured">Spring Boot</span><span class="skill-tag">Spring Security</span><span class="skill-tag">PHP</span><span class="skill-tag">Node.js</span><span class="skill-tag featured">Python</span><span class="skill-tag">Solidity</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">🖥️</div>
-      <div class="skill-cat-name">Frontend</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">Angular</span><span class="skill-tag featured">React.js</span><span class="skill-tag">Flutter</span><span class="skill-tag">TypeScript</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML5/SCSS</span><span class="skill-tag">Tailwind</span><span class="skill-tag">Web3.js</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">🗄️</div>
-      <div class="skill-cat-name">Data &amp; Databases</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag featured">SQL</span><span class="skill-tag">PL/SQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Hibernate/JPA</span><span class="skill-tag featured">Power BI</span><span class="skill-tag">Excel</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">📊</div>
-      <div class="skill-cat-name">Data Analytics</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">Data Visualization</span><span class="skill-tag featured">Tableau</span><span class="skill-tag featured">Dashboard</span><span class="skill-tag">Exploratory Analysis</span><span class="skill-tag">Reporting</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">☁️</div>
-      <div class="skill-cat-name">Cloud &amp; Infrastructure</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">AWS</span><span class="skill-tag">EC2 / S3 / RDS</span><span class="skill-tag featured">Linux</span><span class="skill-tag">Windows Server</span><span class="skill-tag">Docker</span><span class="skill-tag">Zabbix</span><span class="skill-tag">Git/GitHub</span><span class="skill-tag">CI/CD</span><span class="skill-tag">OpenStack</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">🔒</div>
-      <div class="skill-cat-name">Security &amp; Networks</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">Firewall Mgmt</span><span class="skill-tag featured">OPNsense</span><span class="skill-tag">Endpoint Security</span><span class="skill-tag">IoT</span><span class="skill-tag">Network Config</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">🤖</div>
-      <div class="skill-cat-name">AI &amp; Integration</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">RAG Systems</span><span class="skill-tag featured">AI Integration</span><span class="skill-tag">LLM APIs</span><span class="skill-tag">Doc Generation</span><span class="skill-tag">Python AI libs</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">🔗</div>
-      <div class="skill-cat-name">Blockchain &amp; Web3</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">Solidity</span><span class="skill-tag">Smart Contracts</span><span class="skill-tag">Web3.js</span><span class="skill-tag">IPFS</span><span class="skill-tag">Ethereum</span>
-      </div>
-    </div>
-    <div class="skill-cat">
-      <div class="skill-cat-icon">🛠️</div>
-      <div class="skill-cat-name">Tools &amp; Methods</div>
-      <div class="skill-tags">
-        <span class="skill-tag featured">Agile/Scrum</span><span class="skill-tag">UML</span><span class="skill-tag">Postman</span><span class="skill-tag featured">Mantis</span><span class="skill-tag featured">Squash TM</span><span class="skill-tag">REST APIs</span><span class="skill-tag">JWT/RBAC</span><span class="skill-tag">DevOps</span>
-      </div>
-    </div>
+    <div class="skill-cat"><div class="skill-cat-icon">⚙️</div><div class="skill-cat-name">Backend &amp; Core</div><div class="skill-tags"><span class="skill-tag featured">Java</span><span class="skill-tag featured">Spring Boot</span><span class="skill-tag">Spring Security</span><span class="skill-tag">PHP</span><span class="skill-tag">Node.js</span><span class="skill-tag featured">Python</span><span class="skill-tag">Solidity</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">🖥️</div><div class="skill-cat-name">Frontend</div><div class="skill-tags"><span class="skill-tag featured">Angular</span><span class="skill-tag featured">React.js</span><span class="skill-tag">Flutter</span><span class="skill-tag">TypeScript</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML5/SCSS</span><span class="skill-tag">Tailwind</span><span class="skill-tag">Web3.js</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">🗄️</div><div class="skill-cat-name">Data &amp; Databases</div><div class="skill-tags"><span class="skill-tag featured">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag featured">SQL</span><span class="skill-tag">PL/SQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Hibernate/JPA</span><span class="skill-tag featured">Power BI</span><span class="skill-tag">Excel</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">📊</div><div class="skill-cat-name">Data Analytics</div><div class="skill-tags"><span class="skill-tag featured">Data Visualization</span><span class="skill-tag featured">Tableau</span><span class="skill-tag featured">Dashboard</span><span class="skill-tag">Exploratory Analysis</span><span class="skill-tag">Reporting</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">☁️</div><div class="skill-cat-name">Cloud &amp; Infrastructure</div><div class="skill-tags"><span class="skill-tag featured">AWS</span><span class="skill-tag">EC2 / S3 / RDS</span><span class="skill-tag featured">Linux</span><span class="skill-tag">Windows Server</span><span class="skill-tag">Docker</span><span class="skill-tag">Zabbix</span><span class="skill-tag">Git/GitHub</span><span class="skill-tag">CI/CD</span><span class="skill-tag">OpenStack</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">🔒</div><div class="skill-cat-name">Security &amp; Networks</div><div class="skill-tags"><span class="skill-tag featured">Firewall Mgmt</span><span class="skill-tag featured">OPNsense</span><span class="skill-tag">Endpoint Security</span><span class="skill-tag">IoT</span><span class="skill-tag">Network Config</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">🤖</div><div class="skill-cat-name">AI &amp; Integration</div><div class="skill-tags"><span class="skill-tag featured">RAG Systems</span><span class="skill-tag featured">AI Integration</span><span class="skill-tag">LLM APIs</span><span class="skill-tag">Doc Generation</span><span class="skill-tag">Python AI libs</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">🔗</div><div class="skill-cat-name">Blockchain &amp; Web3</div><div class="skill-tags"><span class="skill-tag featured">Solidity</span><span class="skill-tag">Smart Contracts</span><span class="skill-tag">Web3.js</span><span class="skill-tag">IPFS</span><span class="skill-tag">Ethereum</span></div></div>
+    <div class="skill-cat"><div class="skill-cat-icon">🛠️</div><div class="skill-cat-name">Tools &amp; Methods</div><div class="skill-tags"><span class="skill-tag featured">Agile/Scrum</span><span class="skill-tag">UML</span><span class="skill-tag">Postman</span><span class="skill-tag featured">Mantis</span><span class="skill-tag featured">Squash TM</span><span class="skill-tag">REST APIs</span><span class="skill-tag">JWT/RBAC</span><span class="skill-tag">DevOps</span></div></div>
   </div>
 </section>
 
 <div class="hud-divider"></div>
 
-<!-- ═══ EXPERIENCE ═══ -->
 <section id="experience">
   <div class="section-header reveal">
     <div class="section-label">Sortie Log</div>
@@ -1139,9 +995,7 @@ footer {
         <li>Integrating AI features including a RAG system and automated document generation.</li>
         <li>Handling the full product lifecycle: requirements, data modeling, development, and testing.</li>
       </ul>
-      <div class="timeline-tags">
-        <span class="t-tag">Angular</span><span class="t-tag">Spring Boot</span><span class="t-tag">RAG</span><span class="t-tag">AI Integration</span><span class="t-tag">Doc Generation</span><span class="t-tag">SaaS</span><span class="t-tag">CRM</span>
-      </div>
+      <div class="timeline-tags"><span class="t-tag">Angular</span><span class="t-tag">Spring Boot</span><span class="t-tag">RAG</span><span class="t-tag">AI Integration</span><span class="t-tag">Doc Generation</span><span class="t-tag">SaaS</span><span class="t-tag">CRM</span></div>
     </div>
     <div class="timeline-item">
       <div class="timeline-node"></div>
@@ -1154,9 +1008,7 @@ footer {
         <li>Reduced load time on critical financial statements through query optimization.</li>
         <li>Automated administrative workflows with dynamic PDF generation.</li>
       </ul>
-      <div class="timeline-tags">
-        <span class="t-tag">PHP</span><span class="t-tag">SQL</span><span class="t-tag">Dolibarr ERP</span><span class="t-tag">PDF generation</span>
-      </div>
+      <div class="timeline-tags"><span class="t-tag">PHP</span><span class="t-tag">SQL</span><span class="t-tag">Dolibarr ERP</span><span class="t-tag">PDF generation</span></div>
     </div>
     <div class="timeline-item">
       <div class="timeline-node"></div>
@@ -1168,16 +1020,13 @@ footer {
         <li>Built interactive frontend with React.js for a smooth user experience.</li>
         <li>Developed and deployed Smart Contracts in Solidity, integrated via Web3.js.</li>
       </ul>
-      <div class="timeline-tags">
-        <span class="t-tag">Solidity</span><span class="t-tag">React.js</span><span class="t-tag">Web3.js</span><span class="t-tag">Blockchain</span><span class="t-tag">IPFS</span>
-      </div>
+      <div class="timeline-tags"><span class="t-tag">Solidity</span><span class="t-tag">React.js</span><span class="t-tag">Web3.js</span><span class="t-tag">Blockchain</span><span class="t-tag">IPFS</span></div>
     </div>
   </div>
 </section>
 
 <div class="hud-divider"></div>
 
-<!-- ═══ PROJECTS ═══ -->
 <section id="projects">
   <div class="section-header reveal">
     <div class="section-label">Deployed Ops</div>
@@ -1199,7 +1048,6 @@ footer {
 
 <div class="hud-divider"></div>
 
-<!-- ═══ GITHUB ═══ -->
 <section id="github">
   <div class="section-header reveal">
     <div class="section-label">Open Source</div>
@@ -1219,13 +1067,13 @@ footer {
 
 <div class="hud-divider"></div>
 
-<!-- ═══ CERTIFICATIONS ═══ -->
 <section id="certifications">
   <div class="section-header reveal">
     <div class="section-label">Credentials</div>
     <h2 class="section-title">Certified <em>Clearance</em></h2>
   </div>
   <div class="cert-grid reveal">
+
     <div class="cert-card">
       <div class="cert-icon aws">☁️</div>
       <div class="cert-body">
@@ -1235,6 +1083,7 @@ footer {
         <div class="cert-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Verified credential</div>
       </div>
     </div>
+
     <div class="cert-card">
       <div class="cert-icon huawei">🔴</div>
       <div class="cert-body">
@@ -1244,6 +1093,7 @@ footer {
         <div class="cert-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Verified credential</div>
       </div>
     </div>
+
     <div class="cert-card">
       <div class="cert-icon ibm">🎓</div>
       <div class="cert-body">
@@ -1253,6 +1103,7 @@ footer {
         <div class="cert-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Completed Feb 27, 2026</div>
       </div>
     </div>
+
     <div class="cert-card">
       <div class="cert-icon cisco">📊</div>
       <div class="cert-body">
@@ -1261,45 +1112,47 @@ footer {
         <div class="cert-desc">Cisco NetAcad course covering data analytics fundamentals, exploration, visualization, and storytelling with data.</div>
         <div class="cert-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Completed Mar 26, 2026</div>
       </div>
-       <div class="cert-card">
-  <div class="cert-icon" style="border-color: rgba(0,120,215,.25);">🪟</div>
-  <div class="cert-body">
-    <div class="cert-issuer">Microsoft · GitHub</div>
-    <div class="cert-name">GitHub Fundamentals — Administration basics and product features (Part 1 of 2)</div>
-    <div class="cert-desc">GitHub administration, repository management, DevOps workflows and product features. Issued April 2026.</div>
-    <div class="cert-verified">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/9RCFAERU?sharingId=57FCD8AE461DCC45" target="_blank" style="color:var(--green);text-decoration:none;">View credential</a>
     </div>
-  </div>
-</div>
 
-<div class="cert-card">
-  <div class="cert-icon" style="border-color: rgba(0,120,215,.25);">🪟</div>
-  <div class="cert-body">
-    <div class="cert-issuer">Microsoft · GitHub</div>
-    <div class="cert-name">GitHub Foundations (Part 2 of 2)</div>
-    <div class="cert-desc">GitHub collaboration, Git version control, branching strategies and open source workflows. Issued April 2026.</div>
-    <div class="cert-verified">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/PGESC6D4?sharingId=57FCD8AE461DCC45" target="_blank" style="color:var(--green);text-decoration:none;">View credential</a>
+    <div class="cert-card">
+      <div class="cert-icon ms">🐙</div>
+      <div class="cert-body">
+        <div class="cert-issuer">Microsoft · GitHub</div>
+        <div class="cert-name">GitHub Fundamentals — Administration basics and product features (Part 1 of 2)</div>
+        <div class="cert-desc">GitHub administration, repository management, DevOps workflows and product features. Issued April 2026.</div>
+        <div class="cert-verified">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/9RCFAERU?sharingId=57FCD8AE461DCC45" target="_blank">View credential</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="cert-card">
-  <div class="cert-icon" style="border-color: rgba(0,120,215,.25);">🪟</div>
-  <div class="cert-body">
-    <div class="cert-issuer">Microsoft · GitHub</div>
-    <div class="cert-name">GitHub Foundations (Part 1 of 2)</div>
-    <div class="cert-desc">Core GitHub fundamentals — repositories, commits, pull requests, issues and collaborative development. Issued April 2026.</div>
-    <div class="cert-verified">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/NMWZVH8F?sharingId=57FCD8AE461DCC45" target="_blank" style="color:var(--green);text-decoration:none;">View credential</a>
+    <div class="cert-card">
+      <div class="cert-icon ms">🐙</div>
+      <div class="cert-body">
+        <div class="cert-issuer">Microsoft · GitHub</div>
+        <div class="cert-name">GitHub Foundations (Part 2 of 2)</div>
+        <div class="cert-desc">GitHub collaboration, Git version control, branching strategies and open source workflows. Issued April 2026.</div>
+        <div class="cert-verified">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/PGESC6D4?sharingId=57FCD8AE461DCC45" target="_blank">View credential</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+
+    <div class="cert-card">
+      <div class="cert-icon ms">🐙</div>
+      <div class="cert-body">
+        <div class="cert-issuer">Microsoft · GitHub</div>
+        <div class="cert-name">GitHub Foundations (Part 1 of 2)</div>
+        <div class="cert-desc">Core GitHub fundamentals — repositories, commits, pull requests, issues and collaborative development. Issued April 2026.</div>
+        <div class="cert-verified">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/NMWZVH8F?sharingId=57FCD8AE461DCC45" target="_blank">View credential</a>
+        </div>
+      </div>
     </div>
+
     <div class="cert-card pending">
       <div class="cert-icon">🎯</div>
       <div class="cert-body">
@@ -1308,12 +1161,12 @@ footer {
         <div class="cert-desc">Always expanding — cloud, AI, or security domain.</div>
       </div>
     </div>
+
   </div>
 </section>
 
 <div class="hud-divider"></div>
 
-<!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="contact-wrapper">
     <div class="reveal">
@@ -1351,169 +1204,152 @@ footer {
 </footer>
 
 <script>
-/* ── CURSOR ── */
 const cur  = document.getElementById('cur');
 const ring = document.getElementById('cur-ring');
-let mx=0, my=0, rx=0, ry=0, rot=0, lx=0, ly=0;
-
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
+let mx=0,my=0,rx=0,ry=0,rot=0,lx=0,ly=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 (function tick(){
-  cur.style.left = mx + 'px';
-  cur.style.top  = my + 'px';
-  rx += (mx - rx) * .12;
-  ry += (my - ry) * .12;
-  const dx = mx-lx, dy=my-ly;
-  rot += Math.sqrt(dx*dx+dy*dy) * .3;
-  lx=mx; ly=my;
-  ring.style.left = rx + 'px';
-  ring.style.top  = ry + 'px';
-  ring.style.transform = `translate(-50%,-50%) rotate(${rot}deg)`;
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+  const dx=mx-lx,dy=my-ly;
+  rot+=Math.sqrt(dx*dx+dy*dy)*.3;
+  lx=mx;ly=my;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  ring.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
   requestAnimationFrame(tick);
 })();
 
-document.querySelectorAll('a,button,.skill-cat,.card-wrap,.cert-card,.gh-repo-card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cur.style.transform = 'scale(1.6)';
-    ring.style.width = ring.style.height = '46px';
-    ring.style.borderColor = 'rgba(240,192,216,.5)';
+document.querySelectorAll('a,button,.skill-cat,.card-wrap,.cert-card,.gh-repo-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    cur.style.transform='scale(1.6)';
+    ring.style.width=ring.style.height='46px';
+    ring.style.borderColor='rgba(240,192,216,.5)';
   });
-  el.addEventListener('mouseleave', () => {
-    cur.style.transform = 'scale(1)';
-    ring.style.width = ring.style.height = '32px';
-    ring.style.borderColor = 'rgba(126,184,247,.4)';
+  el.addEventListener('mouseleave',()=>{
+    cur.style.transform='scale(1)';
+    ring.style.width=ring.style.height='32px';
+    ring.style.borderColor='rgba(126,184,247,.4)';
   });
 });
 
-/* ── THEME TOGGLE ── */
-const html = document.documentElement;
-const themeBtn = document.getElementById('themeToggle');
-themeBtn.addEventListener('click', () => {
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  themeBtn.textContent = isDark ? '◑ MODE' : '◐ MODE';
+const html=document.documentElement;
+const themeBtn=document.getElementById('themeToggle');
+themeBtn.addEventListener('click',()=>{
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  themeBtn.textContent=isDark?'◑ MODE':'◐ MODE';
 });
 
-/* ── UPTIME ── */
-const startTime = Date.now();
-function updateUptime() {
-  const s = Math.floor((Date.now() - startTime) / 1000);
-  const h = String(Math.floor(s/3600)).padStart(2,'0');
-  const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
-  const sc = String(s%60).padStart(2,'0');
-  const el = document.getElementById('uptime');
-  if (el) el.textContent = h+':'+m+':'+sc;
+const startTime=Date.now();
+function updateUptime(){
+  const s=Math.floor((Date.now()-startTime)/1000);
+  const h=String(Math.floor(s/3600)).padStart(2,'0');
+  const m=String(Math.floor((s%3600)/60)).padStart(2,'0');
+  const sc=String(s%60).padStart(2,'0');
+  const el=document.getElementById('uptime');
+  if(el) el.textContent=h+':'+m+':'+sc;
 }
-setInterval(updateUptime, 1000);
+setInterval(updateUptime,1000);
 updateUptime();
 
-/* ── SCROLL REVEAL ── */
-const flash = document.getElementById('impactFlash');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
+const flash=document.getElementById('impactFlash');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
       e.target.classList.add('visible');
-      if (flash) { flash.style.opacity = '1'; setTimeout(() => flash.style.opacity = '0', 60); }
+      if(flash){flash.style.opacity='1';setTimeout(()=>flash.style.opacity='0',60);}
     }
   });
-}, { threshold: .12, rootMargin: '0px 0px -36px 0px' });
-document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+},{threshold:.12,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-/* ── LANG COLORS ── */
-const LC = {
-  JavaScript:'#f1e05a', TypeScript:'#3178c6', Java:'#b07219',
-  PHP:'#4F5D95', Python:'#3572A5', Solidity:'#AA6746',
-  HTML:'#e34c26', CSS:'#563d7c', SCSS:'#c6538c', Dart:'#00B4AB',
-  Shell:'#89e051', Vue:'#41b883', Kotlin:'#A97BFF', SQL:'#e38c00'
+const LC={
+  JavaScript:'#f1e05a',TypeScript:'#3178c6',Java:'#b07219',
+  PHP:'#4F5D95',Python:'#3572A5',Solidity:'#AA6746',
+  HTML:'#e34c26',CSS:'#563d7c',SCSS:'#c6538c',Dart:'#00B4AB',
+  Shell:'#89e051',Vue:'#41b883',Kotlin:'#A97BFF',SQL:'#e38c00'
 };
 
-/* ── PROJECTS ── */
-const featured = [
-  {name:'CRM SaaS Platform',              desc:'Full CRM SaaS built from scratch at Broker Immobilier. Covers conception, architecture, full-stack development (Angular + Spring Boot), AI integration with a RAG system, and automated document generation.',langs:['Java','TypeScript','Python'],url:null,live:null},
+const featured=[
+  {name:'CRM SaaS Platform',desc:'Full CRM SaaS built from scratch at Broker Immobilier. Covers conception, architecture, full-stack development (Angular + Spring Boot), AI integration with a RAG system, and automated document generation.',langs:['Java','TypeScript','Python'],url:null,live:null},
   {name:'Cloud Infrastructure Supervision',desc:'Academic project at Mundiapolis (2025/2026) — monitoring infrastructure using Zabbix on AWS, Linux and Windows servers to supervise system health, alerts, and performance metrics.',langs:['Python','Shell'],url:null,live:null},
   {name:'Firewall Configuration — OPNsense',desc:'Academic project at Mundiapolis (2025/2026) — configured and deployed an OPNsense firewall with custom rules, VLANs, and network segmentation to secure a simulated enterprise infrastructure.',langs:['Shell'],url:null,live:null},
-  {name:'Mobile Portfolio App',            desc:'Academic project at Mundiapolis (2025/2026) — a Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:null,live:null},
-  {name:'Smart Digital Banking System',    desc:'Full-stack banking platform with Spring Boot REST API, layered architecture, JWT/RBAC authentication, an AI-powered RAG assistant for customer support, and Angular dashboard with ChartJS.',langs:['Java','TypeScript','Python'],url:null,live:null},
+  {name:'Mobile Portfolio App',desc:'Academic project at Mundiapolis (2025/2026) — a Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:null,live:null},
+  {name:'Smart Digital Banking System',desc:'Full-stack banking platform with Spring Boot REST API, layered architecture, JWT/RBAC authentication, an AI-powered RAG assistant for customer support, and Angular dashboard with ChartJS.',langs:['Java','TypeScript','Python'],url:null,live:null},
   {name:'Decentralized E-Learning Platform',desc:'Web 3.0 e-learning platform with Solidity Smart Contracts on Ethereum, React.js frontend, and Web3.js integration. Final-year project at FST Errachidia.',langs:['Solidity','JavaScript'],url:null,live:null},
-  {name:'Dolibarr ERP Custom Modules',     desc:'4 custom modules for Dolibarr ERP covering Treasury & Tax management — PHP/SQL, workflow automation, PDF generation, and query performance optimization.',langs:['PHP','SQL'],url:null,live:null}
+  {name:'Dolibarr ERP Custom Modules',desc:'4 custom modules for Dolibarr ERP covering Treasury & Tax management — PHP/SQL, workflow automation, PDF generation, and query performance optimization.',langs:['PHP','SQL'],url:null,live:null}
 ];
 
-let activeFilter = 'all';
-const lb = l => `<span class="lang-badge"><span class="lang-dot" style="background:${LC[l]||'#888'}"></span>${l}</span>`;
+let activeFilter='all';
+const lb=l=>`<span class="lang-badge"><span class="lang-dot" style="background:${LC[l]||'#888'}"></span>${l}</span>`;
 
-function renderFeatured() {
-  const grid = document.getElementById('projectsGrid');
-  const list = activeFilter === 'all' ? featured : featured.filter(p => p.langs.some(l => l.toLowerCase().includes(activeFilter.toLowerCase())));
-  if (!list.length) { grid.innerHTML = '<div class="projects-loading">[ NO MATCHES FOUND ]</div>'; return; }
-  grid.innerHTML = list.map(p => {
-    const links = [];
-    if (p.url)  links.push(`<a href="${p.url}"  target="_blank" class="proj-link proj-link-gh">Code</a>`);
-    if (p.live) links.push(`<a href="${p.live}" target="_blank" class="proj-link proj-link-live">↗ Live</a>`);
+function renderFeatured(){
+  const grid=document.getElementById('projectsGrid');
+  const list=activeFilter==='all'?featured:featured.filter(p=>p.langs.some(l=>l.toLowerCase().includes(activeFilter.toLowerCase())));
+  if(!list.length){grid.innerHTML='<div class="projects-loading">[ NO MATCHES FOUND ]</div>';return;}
+  grid.innerHTML=list.map(p=>{
+    const links=[];
+    if(p.url) links.push(`<a href="${p.url}" target="_blank" class="proj-link proj-link-gh">Code</a>`);
+    if(p.live) links.push(`<a href="${p.live}" target="_blank" class="proj-link proj-link-live">↗ Live</a>`);
     return `<div class="card-wrap"><div class="project-card">
-      <div class="project-header">
-        <div class="project-name">${p.name}</div>
-        <span class="source-badge">Featured</span>
-      </div>
+      <div class="project-header"><div class="project-name">${p.name}</div><span class="source-badge">Featured</span></div>
       <div class="project-desc">${p.desc}</div>
       <div class="project-langs">${p.langs.map(lb).join('')}</div>
-      ${links.length ? `<div class="project-links">${links.join('')}</div>` : ''}
+      ${links.length?`<div class="project-links">${links.join('')}</div>`:''}
     </div></div>`;
   }).join('');
 }
 renderFeatured();
 
-document.getElementById('filterBar').addEventListener('click', e => {
-  if (!e.target.classList.contains('filter-btn')) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+document.getElementById('filterBar').addEventListener('click',e=>{
+  if(!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   e.target.classList.add('active');
-  activeFilter = e.target.dataset.filter;
+  activeFilter=e.target.dataset.filter;
   renderFeatured();
 });
 
-/* ── GITHUB ── */
-function timeAgo(d) {
-  const s = Math.floor((Date.now() - new Date(d)) / 1000);
-  if (s < 3600)     return Math.floor(s/60) + 'm ago';
-  if (s < 86400)    return Math.floor(s/3600) + 'h ago';
-  if (s < 2592000)  return Math.floor(s/86400) + 'd ago';
-  if (s < 31536000) return Math.floor(s/2592000) + 'mo ago';
-  return Math.floor(s/31536000) + 'y ago';
+function timeAgo(d){
+  const s=Math.floor((Date.now()-new Date(d))/1000);
+  if(s<3600) return Math.floor(s/60)+'m ago';
+  if(s<86400) return Math.floor(s/3600)+'h ago';
+  if(s<2592000) return Math.floor(s/86400)+'d ago';
+  if(s<31536000) return Math.floor(s/2592000)+'mo ago';
+  return Math.floor(s/31536000)+'y ago';
 }
 
-async function loadGitHub() {
-  const grid = document.getElementById('ghGrid');
-  const meta = document.getElementById('ghMeta');
-  try {
-    const [uRes, rRes] = await Promise.all([
+async function loadGitHub(){
+  const grid=document.getElementById('ghGrid');
+  const meta=document.getElementById('ghMeta');
+  try{
+    const[uRes,rRes]=await Promise.all([
       fetch('https://api.github.com/users/yss-ef'),
       fetch('https://api.github.com/users/yss-ef/repos?sort=updated&per_page=30')
     ]);
-    if (!uRes.ok || !rRes.ok) throw new Error();
-    const user  = await uRes.json();
-    const repos = (await rRes.json()).filter(r => !r.fork);
-    const stars = repos.reduce((s, r) => s + r.stargazers_count, 0);
-
-    meta.innerHTML = `
+    if(!uRes.ok||!rRes.ok) throw new Error();
+    const user=await uRes.json();
+    const repos=(await rRes.json()).filter(r=>!r.fork);
+    const stars=repos.reduce((s,r)=>s+r.stargazers_count,0);
+    meta.innerHTML=`
       <div class="gh-stat-pill"><span class="dot"></span><strong>${repos.length}</strong>&nbsp;public repos</div>
       <div class="gh-stat-pill"><strong>${stars}</strong>&nbsp;total stars</div>
       <div class="gh-stat-pill"><strong>${user.followers}</strong>&nbsp;followers</div>`;
-
-    grid.innerHTML = repos.map(r => `
+    grid.innerHTML=repos.map(r=>`
       <a href="${r.html_url}" target="_blank" class="gh-repo-card">
         <div class="gh-repo-name">
           <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 010-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z"/></svg>
           ${r.name}
         </div>
-        <div class="gh-repo-desc">${r.description || 'No description provided.'}</div>
+        <div class="gh-repo-desc">${r.description||'No description provided.'}</div>
         <div class="gh-repo-footer">
-          ${r.language ? `<span class="gh-repo-lang"><span class="lang-dot" style="background:${LC[r.language]||'#888'}"></span>${r.language}</span>` : ''}
-          ${r.stargazers_count ? `<span class="gh-repo-stat">★ ${r.stargazers_count}</span>` : ''}
-          ${r.forks_count      ? `<span class="gh-repo-stat">⑂ ${r.forks_count}</span>`      : ''}
+          ${r.language?`<span class="gh-repo-lang"><span class="lang-dot" style="background:${LC[r.language]||'#888'}"></span>${r.language}</span>`:''}
+          ${r.stargazers_count?`<span class="gh-repo-stat">★ ${r.stargazers_count}</span>`:''}
+          ${r.forks_count?`<span class="gh-repo-stat">⑂ ${r.forks_count}</span>`:''}
           <span class="gh-repo-updated">${timeAgo(r.updated_at)}</span>
         </div>
       </a>`).join('');
-  } catch(e) {
-    grid.innerHTML = `<div class="projects-loading" style="background:var(--surface)">SIGNAL LOST — <a href="https://github.com/yss-ef" target="_blank" style="color:var(--accent)">View on GitHub →</a></div>`;
+  }catch(e){
+    grid.innerHTML=`<div class="projects-loading" style="background:var(--surface)">SIGNAL LOST — <a href="https://github.com/yss-ef" target="_blank" style="color:var(--accent)">View on GitHub →</a></div>`;
   }
 }
 loadGitHub();
