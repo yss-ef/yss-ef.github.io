@@ -101,16 +101,22 @@ body::after{
 #cur-dot{position:absolute;width:3px;height:3px;background:var(--accent2);top:50%;left:50%;transform:translate(-50%,-50%);}
 
 /* ═══ THEME TOGGLE ═══ */
-#themeToggle{
-  position:fixed;top:14px;right:3rem;z-index:200;
-  background:var(--surface);border:1px solid var(--border2);
-  color:var(--text2);font-family:var(--mono);
-  font-size:.56rem;letter-spacing:.14em;padding:.28rem .8rem;
-  cursor:none;transition:all .2s;text-transform:uppercase;
-  display:flex;align-items:center;gap:7px;
+#themeToggle {
+  background: var(--surface);
+  border: 0.5px solid var(--border2);
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: .54rem; letter-spacing: .14em;
+  padding: .28rem .8rem;
+  cursor: none;
+  transition: border-color .2s, color .2s;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 7px;
+  border-radius: 2px;
+  margin-left: 20px;
+  flex-shrink: 0;
 }
-#themeToggle:hover{border-color:var(--accent);color:var(--accent);}
-
+#themeToggle:hover { border-color: var(--accent); color: var(--accent); }
 /* sun/moon icons inside toggle */
 .toggle-track{
   width:28px;height:14px;background:var(--border2);
@@ -460,7 +466,7 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
 <nav>
   <a href="#hero" class="nav-logo">
     <span class="nav-logo-handle">Y C X R V S</span>
-    <span class="nav-logo-sep">/</span>
+    <span class="nav-logo-sep"></span>
     <span class="nav-logo-name">fellah youssef</span>
   </a>
   <ul class="nav-links">
@@ -472,6 +478,11 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
     <li><a href="#certifications">Certs</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button id="themeToggle" aria-label="Toggle theme">
+    <span class="toggle-icon" id="toggleIcon">☽</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    <span id="toggleLabel">DARK</span>
+  </button>
 </nav>
 
 <!-- HERO -->
