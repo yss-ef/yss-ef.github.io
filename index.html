@@ -36,6 +36,25 @@ html{scroll-behavior:smooth;font-size:20px;}
   --nav-bg:   rgba(232,237,245,.92);
 }
 
+  /* ═══ DARK THEME OVERRIDES ═══ */
+[data-theme="dark"] {
+  --bg:         #0a0f18;
+  --bg2:        #0f1724;
+  --surface:    #161f2e;
+  --surface2:   #1c263a;
+  --border:     rgba(126,184,247,.08);
+  --border2:    rgba(126,184,247,.18);
+  --text:       #e0e6ed;
+  --text2:      #a0aec0;
+  --text3:      #64748b;
+  --accent:     #7eb8f7; /* Brighter blue for dark mode */
+  --accent2:    #f0c0d8; /* Brighter pink for dark mode */
+  --nav-bg:     rgba(10,15,24,.92);
+  --scanline-op:.03;
+  --noise-op:   .04;
+  --crt-vign:   radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.4) 100%);
+}
+
 /* ═══ BODY ═══ */
 body{
   background:var(--bg);color:var(--text);
