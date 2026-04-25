@@ -38,7 +38,7 @@ html{scroll-behavior:smooth;font-size:20px;}
   --nav-bg:   rgba(10,12,15,.88);
 }
 
-/* ═══ LIGHT THEME — same family, lifted ═══ */
+/* ═══ LIGHT THEME ═══ */
 [data-theme="light"]{
   --bg:       #e8edf5;
   --bg2:      #dfe5f0;
@@ -100,37 +100,61 @@ body::after{
 #cur-ring{position:fixed;pointer-events:none;z-index:9998;width:32px;height:32px;border:1px solid rgba(126,184,247,.4);border-radius:0;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s;}
 #cur-dot{position:absolute;width:3px;height:3px;background:var(--accent2);top:50%;left:50%;transform:translate(-50%,-50%);}
 
-/* ═══ THEME TOGGLE ═══ */
-#themeToggle {
-  background: var(--surface);
-  border: 0.5px solid var(--border2);
-  color: var(--text2);
-  font-family: var(--mono);
-  font-size: .54rem; letter-spacing: .14em;
-  padding: .28rem .8rem;
-  cursor: none;
-  transition: border-color .2s, color .2s;
-  text-transform: uppercase;
-  display: flex; align-items: center; gap: 7px;
-  border-radius: 2px;
-  margin-left: 20px;
-  flex-shrink: 0;
+/* ═══ THEME TOGGLE — floating pill ═══ */
+#themeToggle{
+  position:fixed;
+  bottom:2rem;
+  right:2rem;
+  z-index:9950;
+  cursor:none;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  padding:0;
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:border-color .2s,background .2s,transform .15s;
+  /* clip-path gives it a chamfered corner look matching the site's aesthetic */
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
 }
-#themeToggle:hover { border-color: var(--accent); color: var(--accent); }
-/* sun/moon icons inside toggle */
-.toggle-track{
-  width:28px;height:14px;background:var(--border2);
-  border-radius:0;position:relative;transition:background .25s;
-  flex-shrink:0;
+#themeToggle:hover{
+  border-color:var(--accent);
+  transform:scale(1.08);
 }
-[data-theme="light"] .toggle-track{background:rgba(42,114,200,.35);}
-.toggle-thumb{
-  position:absolute;top:2px;left:2px;
-  width:10px;height:10px;background:var(--accent);
-  transition:transform .25s,background .25s;
+#themeToggle:active{transform:scale(.96);}
+
+/* the icon inside */
+#themeToggle .t-icon{
+  font-size:1.15rem;
+  line-height:1;
+  transition:transform .35s ease, opacity .25s ease;
+  display:block;
 }
-[data-theme="light"] .toggle-thumb{transform:translateX(14px);}
-.toggle-icon{font-size:.7rem;}
+/* sun/moon swap animation */
+#themeToggle .t-icon.spin-out{
+  transform:rotate(90deg) scale(.4);
+  opacity:0;
+}
+
+/* hud label that appears on hover */
+#themeToggle::after{
+  content:attr(data-label);
+  position:absolute;
+  right:calc(100% + 10px);
+  top:50%;
+  transform:translateY(-50%);
+  font-family:var(--mono);
+  font-size:.5rem;
+  letter-spacing:.16em;
+  color:var(--text3);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity .2s;
+  pointer-events:none;
+}
+#themeToggle:hover::after{opacity:1;}
 
 /* ═══ NAV ═══ */
 nav{
@@ -279,10 +303,7 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 .timeline-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.85rem;}
 .t-tag{background:transparent;border:1px solid var(--border);color:var(--text3);padding:.18rem .5rem;font-size:.58rem;font-family:var(--mono);}
 
-/* ═══════════════════════════════════
-   PROJECTS — PROFESSIONAL CARD STYLE
-   Row layout: accent bar | meta | desc
-════════════════════════════════════ */
+/* ═══ PROJECTS ═══ */
 #projects{background:var(--bg);}
 .projects-filter{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2.5rem;}
 .filter-btn{background:transparent;border:1px solid var(--border);color:var(--text3);padding:.3rem .85rem;font-size:.58rem;font-family:var(--mono);cursor:none;text-transform:uppercase;letter-spacing:.08em;transition:all .18s;}
@@ -307,11 +328,9 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 }
 .project-row:hover::after{opacity:1;}
 
-/* left accent bar */
 .pr-bar{background:var(--border2);transition:background .2s;}
 .project-row:hover .pr-bar{background:linear-gradient(to bottom,var(--accent),var(--accent2));}
 
-/* meta column */
 .pr-meta{
   padding:1.1rem 1.4rem;
   border-right:1px solid var(--border);
@@ -324,13 +343,11 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 .lang-dot-sm{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;}
 .pr-lang-tag{display:inline-flex;align-items:center;gap:4px;font-size:.52rem;color:var(--text3);font-family:var(--mono);}
 
-/* body column */
 .pr-body{padding:1.1rem 1.6rem;display:flex;flex-direction:column;justify-content:center;gap:.5rem;}
 .pr-desc{font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--text2);line-height:1.65;}
 .pr-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.25rem;}
 .pr-tag{background:transparent;border:1px solid var(--border);color:var(--text3);padding:.14rem .42rem;font-size:.52rem;font-family:var(--mono);}
 
-/* links column */
 .pr-links{padding:1.1rem 1.2rem;display:flex;flex-direction:column;justify-content:center;gap:.4rem;flex-shrink:0;border-left:1px solid var(--border);}
 .pr-link{display:inline-flex;align-items:center;gap:5px;text-decoration:none;font-size:.58rem;font-family:var(--mono);padding:.26rem .6rem;border:1px solid var(--border);white-space:nowrap;transition:all .18s;}
 .pr-link-gh{color:var(--accent);border-color:rgba(126,184,247,.2);}
@@ -363,9 +380,7 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 .gh-cta{margin-top:2rem;display:flex;justify-content:center;}
 .lang-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;}
 
-/* ═══════════════════════════════════
-   CERTIFICATIONS — PROFESSIONAL ROWS
-════════════════════════════════════ */
+/* ═══ CERTIFICATIONS ═══ */
 #certifications{background:var(--bg);}
 
 .cert-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
@@ -381,20 +396,16 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 .cert-row:hover{background:var(--surface2);}
 .cert-row.pending{opacity:.42;}
 
-/* accent bar */
 .cr-bar{align-self:stretch;background:var(--border2);transition:background .2s;}
 .cert-row:hover .cr-bar{background:linear-gradient(to bottom,var(--accent3),var(--accent2));}
 
-/* icon cell */
 .cr-icon{display:flex;align-items:center;justify-content:center;font-size:1.15rem;padding:0 .6rem;align-self:stretch;border-right:1px solid var(--border);}
 
-/* content */
 .cr-content{padding:.9rem 1.4rem;display:flex;flex-direction:column;gap:.25rem;}
 .cr-issuer{font-size:.52rem;color:var(--accent2);text-transform:uppercase;letter-spacing:.14em;}
 .cr-name{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.25;}
 .cr-desc{font-size:.68rem;color:var(--text2);line-height:1.5;font-family:var(--serif);font-style:italic;}
 
-/* verified badge / link */
 .cr-action{padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:center;border-left:1px solid var(--border);flex-shrink:0;min-width:110px;}
 .cr-verified{display:inline-flex;align-items:center;gap:5px;font-size:.54rem;color:var(--green);}
 .cr-verified svg{width:10px;height:10px;flex-shrink:0;}
@@ -440,7 +451,7 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
   .about-grid{grid-template-columns:1fr;gap:2rem;}
   .contact-wrapper{grid-template-columns:1fr;gap:2.5rem;}
   footer{flex-direction:column;gap:.5rem;text-align:center;}
-  #themeToggle{right:1.5rem;}
+  #themeToggle{bottom:1.25rem;right:1.25rem;}
   .dossier{padding:1.5rem;}
   .dossier-header{flex-direction:column;gap:.4rem;}
   .project-row{grid-template-columns:3px 1fr;}
@@ -455,11 +466,9 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
 <div id="cur"><div id="cur-cross"><div id="cur-dot"></div></div></div>
 <div id="cur-ring"></div>
 
-<!-- THEME TOGGLE -->
-<button id="themeToggle" aria-label="Toggle theme">
-  <span class="toggle-icon" id="toggleIcon">☽</span>
-  <div class="toggle-track"><div class="toggle-thumb"></div></div>
-  <span id="toggleLabel">DARK</span>
+<!-- FLOATING THEME TOGGLE -->
+<button id="themeToggle" data-label="DARK MODE" aria-label="Toggle theme">
+  <span class="t-icon" id="themeIcon">☽</span>
 </button>
 
 <!-- NAV -->
@@ -478,11 +487,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
     <li><a href="#certifications">Certs</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button id="themeToggle" aria-label="Toggle theme">
-    <span class="toggle-icon" id="toggleIcon">☽</span>
-    <div class="toggle-track"><div class="toggle-thumb"></div></div>
-    <span id="toggleLabel">DARK</span>
-  </button>
 </nav>
 
 <!-- HERO -->
@@ -691,7 +695,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
     <h2 class="section-title">Certified <em>Clearance</em></h2>
   </div>
   <div class="cert-list reveal">
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">☁️</div>
@@ -702,7 +705,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Verified</span></div>
     </div>
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">🔴</div>
@@ -713,7 +715,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Verified</span></div>
     </div>
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">🎓</div>
@@ -724,7 +725,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Feb 27, 2026</span></div>
     </div>
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">📊</div>
@@ -735,7 +735,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Mar 26, 2026</span></div>
     </div>
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">🐙</div>
@@ -746,7 +745,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/9RCFAERU?sharingId=57FCD8AE461DCC45" target="_blank">View</a></span></div>
     </div>
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">🐙</div>
@@ -757,7 +755,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/PGESC6D4?sharingId=57FCD8AE461DCC45" target="_blank">View</a></span></div>
     </div>
-
     <div class="cert-row">
       <div class="cr-bar"></div>
       <div class="cr-icon">🐙</div>
@@ -768,7 +765,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><a href="https://learn.microsoft.com/api/achievements/share/en-us/YoussefFellah-2186/NMWZVH8F?sharingId=57FCD8AE461DCC45" target="_blank">View</a></span></div>
     </div>
-
     <div class="cert-row pending">
       <div class="cr-bar"></div>
       <div class="cr-icon">🎯</div>
@@ -779,7 +775,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
       </div>
       <div class="cr-action"><span class="cr-verified" style="color:var(--text3);">Pending</span></div>
     </div>
-
   </div>
 </section>
 
@@ -841,14 +836,21 @@ document.querySelectorAll('a,button,.skill-cat,.project-row,.cert-row,.gh-repo-c
 /* ── THEME TOGGLE ── */
 const html=document.documentElement;
 const themeBtn=document.getElementById('themeToggle');
-const toggleIcon=document.getElementById('toggleIcon');
-const toggleLabel=document.getElementById('toggleLabel');
+const themeIcon=document.getElementById('themeIcon');
 
 themeBtn.addEventListener('click',()=>{
   const isDark=html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme',isDark?'light':'dark');
-  toggleIcon.textContent=isDark?'☀':'☽';
-  toggleLabel.textContent=isDark?'LIGHT':'DARK';
+  const nextTheme=isDark?'light':'dark';
+
+  /* spin-out the current icon */
+  themeIcon.classList.add('spin-out');
+
+  setTimeout(()=>{
+    html.setAttribute('data-theme',nextTheme);
+    themeIcon.textContent=nextTheme==='dark'?'☽':'☀';
+    themeBtn.setAttribute('data-label', nextTheme==='dark'?'DARK MODE':'LIGHT MODE');
+    themeIcon.classList.remove('spin-out');
+  },200);
 });
 
 /* ── UPTIME ── */
