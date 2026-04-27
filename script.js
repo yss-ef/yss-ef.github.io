@@ -14,15 +14,20 @@ const bootScreen = document.getElementById('boot-screen');
 const bootText = document.getElementById('boot-text');
 
 async function runBoot() {
+  // Initial pause before starting
+  await new Promise(r => setTimeout(r, 800));
+  
   for (const msg of bootMessages) {
     const line = document.createElement('div');
     line.className = 'boot-line';
     line.textContent = '> ' + msg;
     bootText.appendChild(line);
-    await new Promise(r => setTimeout(r, 100));
+    // Increased delay between lines (approx 1.2s per line)
+    await new Promise(r => setTimeout(r, 1200));
     line.classList.add('show');
   }
-  await new Promise(r => setTimeout(r, 400));
+  // Longer final pause for reading the last message
+  await new Promise(r => setTimeout(r, 1500));
   bootScreen.classList.add('boot-hidden');
   
   // Trigger impact flash on boot complete
