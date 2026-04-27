@@ -481,3 +481,66 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
   .dossier-header{flex-direction:column;gap:.4rem;}
   .project-row{grid-template-columns:3px 1fr;}
 }
+
+/* ═══ BOOT SCREEN ═══ */
+#boot-screen {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 0.7rem;
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+#boot-screen.boot-hidden { opacity: 0; visibility: hidden; }
+.boot-content { width: 300px; }
+.boot-line { margin-bottom: 4px; opacity: 0; transform: translateY(5px); transition: all 0.2s; }
+.boot-line.show { opacity: 1; transform: translateY(0); }
+
+/* ═══ REACTIVE GRID GLOW ═══ */
+.grid-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(42, 114, 200, 0.08), transparent 40%);
+  opacity: 0; transition: opacity 0.5s; pointer-events: none;
+}
+[data-theme="dark"] .grid-bg::after { opacity: 1; }
+
+/* ═══ TARGETING BRACKETS ═══ */
+.project-row, .contact-card, .dossier, .cert-row { position: relative; }
+.project-row::before, .project-row::after,
+.contact-card::before, .contact-card::after,
+.dossier::before, .dossier::after,
+.cert-row::before, .cert-row::after {
+  content: ''; position: absolute; width: 12px; height: 12px;
+  border: 1.5px solid var(--accent); opacity: 0; transition: all 0.3s ease;
+  pointer-events: none; z-index: 10;
+}
+/* TL bracket */
+.project-row::before, .contact-card::before, .dossier::before, .cert-row::before {
+  top: -4px; left: -4px; border-right: 0; border-bottom: 0;
+}
+/* BR bracket */
+.project-row::after, .contact-card::after, .dossier::after, .cert-row::after {
+  bottom: -4px; right: -4px; border-left: 0; border-top: 0;
+}
+
+.project-row:hover::before, .contact-card:hover::before, .dossier:hover::before, .cert-row:hover::before {
+  opacity: 1; transform: translate(-2px, -2px);
+}
+.project-row:hover::after, .contact-card:hover::after, .dossier:hover::after, .cert-row:hover::after {
+  opacity: 1; transform: translate(2px, 2px);
+}
+
+/* ═══ STAGGERED DELAYS ═══ */
+.delay-1 { transition-delay: 0.1s !important; }
+.delay-2 { transition-delay: 0.2s !important; }
+.delay-3 { transition-delay: 0.3s !important; }
+.delay-4 { transition-delay: 0.4s !important; }
+.delay-5 { transition-delay: 0.5s !important; }
+.delay-6 { transition-delay: 0.6s !important; }
+
+/* ═══ GLASSMORPHISM UPGRADE ═══ */
+nav { backdrop-filter: blur(20px) saturate(180%); }
+.dossier { 
+  background: var(--glass-bg); backdrop-filter: blur(12px); 
+  border: 1px solid var(--border2); 
+}
