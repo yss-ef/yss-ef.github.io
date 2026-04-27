@@ -1,5 +1,11 @@
 /* ── LUCIDE INIT ── */
-lucide.createIcons();
+const initLucide = () => {
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+};
+
+document.addEventListener('DOMContentLoaded', initLucide);
 
 /* ── BOOT SEQUENCE ── */
 const bootMessages = [
@@ -156,6 +162,7 @@ function renderFeatured(){
       ${linksCol}
     </div>`;
   }).join('');
+  initLucide();
 }
 renderFeatured();
 
@@ -196,6 +203,7 @@ async function loadGitHub(){
         ${r.forks_count?`<span class="gh-repo-stat">⑂ ${r.forks_count}</span>`:''}
         <span class="gh-repo-updated">${timeAgo(r.updated_at)}</span>
       </div></a>`).join('');
+    initLucide();
   }catch(e){
     grid.innerHTML=`<div class="projects-loading">SIGNAL LOST — <a href="https://github.com/yss-ef" target="_blank" style="color:var(--accent)">View on GitHub →</a></div>`;
   }
