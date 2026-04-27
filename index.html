@@ -15,8 +15,14 @@
 <div class="scanlines"></div>
 <div class="grid-bg"></div>
 <div id="impactFlash"></div>
-<div id="cur"><div id="cur-cross"><div id="cur-dot"></div></div></div>
-<div id="cur-ring"></div>
+<div id="cur"><div id="cur-cross"><div id="cur-dot"></div></div><div id="cur-ring"></div></div>
+
+<div id="telemetry">
+  <div class="tel-row"><span>STATUS</span><span class="tel-val">SYSTEM_READY</span></div>
+  <div class="tel-row"><span>PERF</span><span class="tel-val" id="tel-fps">-- FPS</span></div>
+  <div class="tel-row"><span>MEM</span><span class="tel-val" id="tel-mem">-- MB</span></div>
+  <div class="tel-row"><span>TIME</span><span class="tel-val" id="tel-time">--:--:--.--</span></div>
+</div>
 
 <!-- FLOATING THEME TOGGLE -->
 <button id="themeToggle" data-label="DARK MODE" aria-label="Toggle theme">
@@ -94,7 +100,7 @@
 <section id="about">
   <div class="section-header reveal">
     <div class="section-label">Who I am</div>
-    <h2 class="section-title">Operator <em>Profile</em></h2>
+    <h2 class="section-title glitch-trigger">Operator <em>Profile</em></h2>
   </div>
   <div class="dossier reveal">
     <div class="dossier-corner tl"></div>
@@ -139,35 +145,35 @@
 <section id="skills">
   <div class="section-header reveal">
     <div class="section-label">Arsenal</div>
-    <h2 class="section-title">Technical <em>Stack</em></h2>
+    <h2 class="section-title glitch-trigger">Technical <em>Stack</em></h2>
   </div>
   <div class="skills-categories reveal">
     <!-- Backend & Core -->
-    <div class="skill-cat">
+    <div class="skill-cat delay-1">
       <div class="skill-cat-icon"><i data-lucide="cpu" class="icon-cat"></i></div>
       <div class="skill-cat-name">Backend &amp; Core</div>
       <div class="skill-tags"><span class="skill-tag featured">Java</span><span class="skill-tag featured">Spring Boot</span><span class="skill-tag">Spring Security</span><span class="skill-tag">PHP</span><span class="skill-tag">Node.js</span><span class="skill-tag featured">Python</span><span class="skill-tag">Solidity</span></div>
     </div>
     <!-- Frontend -->
-    <div class="skill-cat">
+    <div class="skill-cat delay-2">
       <div class="skill-cat-icon"><i data-lucide="monitor" class="icon-cat"></i></div>
       <div class="skill-cat-name">Frontend</div>
       <div class="skill-tags"><span class="skill-tag featured">Angular</span><span class="skill-tag featured">React.js</span><span class="skill-tag">Flutter</span><span class="skill-tag">TypeScript</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML5/SCSS</span><span class="skill-tag">Tailwind</span><span class="skill-tag">Web3.js</span></div>
     </div>
     <!-- Data & Databases -->
-    <div class="skill-cat">
+    <div class="skill-cat delay-3">
       <div class="skill-cat-icon"><i data-lucide="database" class="icon-cat"></i></div>
       <div class="skill-cat-name">Data &amp; Databases</div>
       <div class="skill-tags"><span class="skill-tag featured">PostgreSQL</span><span class="skill-tag">MySQL</span><span class="skill-tag featured">SQL</span><span class="skill-tag">PL/SQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">Hibernate/JPA</span><span class="skill-tag featured">Power BI</span><span class="skill-tag">Excel</span></div>
     </div>
     <!-- Data Analytics -->
-    <div class="skill-cat">
+    <div class="skill-cat delay-4">
       <div class="skill-cat-icon"><i data-lucide="bar-chart-2" class="icon-cat"></i></div>
       <div class="skill-cat-name">Data Analytics</div>
       <div class="skill-tags"><span class="skill-tag featured">Data Visualization</span><span class="skill-tag featured">Tableau</span><span class="skill-tag featured">Dashboard</span><span class="skill-tag">Exploratory Analysis</span><span class="skill-tag">Reporting</span></div>
     </div>
     <!-- Cloud & Infrastructure -->
-    <div class="skill-cat">
+    <div class="skill-cat delay-5">
       <div class="skill-cat-icon"><i data-lucide="cloud" class="icon-cat"></i></div>
       <div class="skill-cat-name">Cloud &amp; Infrastructure</div>
       <div class="skill-tags"><span class="skill-tag featured">AWS</span><span class="skill-tag">EC2 / S3 / RDS</span><span class="skill-tag featured">Linux</span><span class="skill-tag">Windows Server</span><span class="skill-tag">Docker</span><span class="skill-tag">Zabbix</span><span class="skill-tag">Git/GitHub</span><span class="skill-tag">CI/CD</span><span class="skill-tag">OpenStack</span></div>
@@ -205,7 +211,7 @@
 <section id="experience">
   <div class="section-header reveal">
     <div class="section-label">Sortie Log</div>
-    <h2 class="section-title">Field <em>Experience</em></h2>
+    <h2 class="section-title glitch-trigger">Field <em>Experience</em></h2>
   </div>
   <div class="timeline reveal">
     <div class="timeline-item">
@@ -255,7 +261,7 @@
 <section id="projects">
   <div class="section-header reveal">
     <div class="section-label">Deployed Ops</div>
-    <h2 class="section-title">Featured <em>Projects</em></h2>
+    <h2 class="section-title glitch-trigger">Featured <em>Projects</em></h2>
   </div>
   <div class="projects-filter reveal" id="filterBar">
     <button class="filter-btn active" data-filter="all">All</button>
@@ -277,7 +283,7 @@
 <section id="github">
   <div class="section-header reveal">
     <div class="section-label">Open Source</div>
-    <h2 class="section-title">GitHub <em>Repositories</em></h2>
+    <h2 class="section-title glitch-trigger">GitHub <em>Repositories</em></h2>
   </div>
   <div class="gh-meta reveal" id="ghMeta"></div>
   <div class="gh-grid reveal" id="ghGrid">
@@ -297,7 +303,7 @@
 <section id="certifications">
   <div class="section-header reveal">
     <div class="section-label">Credentials</div>
-    <h2 class="section-title">Certified <em>Clearance</em></h2>
+    <h2 class="section-title glitch-trigger">Certified <em>Clearance</em></h2>
   </div>
   <div class="cert-list reveal">
     <!-- AWS -->

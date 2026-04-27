@@ -1,10 +1,18 @@
 /* ── LUCIDE INIT ── */
 lucide.createIcons();
 
-/* ── CURSOR ── */
+/* ── CURSOR & GRID GLOW ── */
 const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0,rot=0,lx=0,ly=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;
+  my=e.clientY;
+  // Reactive grid glow
+  const xPct = (e.clientX / window.innerWidth) * 100;
+  const yPct = (e.clientY / window.innerHeight) * 100;
+  document.documentElement.style.setProperty('--mouse-x', xPct + '%');
+  document.documentElement.style.setProperty('--mouse-y', yPct + '%');
+});
 (function tick(){
   cur.style.left=mx+'px';cur.style.top=my+'px';
   rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
@@ -53,6 +61,56 @@ function updateUptime(){
 }
 setInterval(updateUptime,1000);updateUptime();
 
+/* ── TELEMETRY ── */
+let fps = 0;
+let lastTime = performance.now();
+let frames = 0;
+function updateTelemetry() {
+  frames++;
+  const now = performance.now();
+  if (now >= lastTime + 1000) {
+    fps = frames;
+    frames = 0;
+    lastTime = now;
+  }
+  
+  const fpsEl = document.getElementById('tel-fps');
+  const memEl = document.getElementById('tel-mem');
+  const timeEl = document.getElementById('tel-time');
+  
+  if (fpsEl) fpsEl.textContent = fps + ' FPS';
+  if (memEl) {
+    // Simulated memory usage oscillating slowly
+    const memBase = 42.5;
+    const memVar = Math.sin(now / 2000) * 2.5;
+    memEl.textContent = (memBase + memVar).toFixed(1) + ' MB';
+  }
+  if (timeEl) {
+    const d = new Date();
+    timeEl.textContent = d.getHours().toString().padStart(2,'0') + ':' + 
+                         d.getMinutes().toString().padStart(2,'0') + ':' + 
+                         d.getSeconds().toString().padStart(2,'0') + '.' + 
+                         Math.floor(d.getMilliseconds()/10).toString().padStart(2,'0');
+  }
+  requestAnimationFrame(updateTelemetry);
+}
+updateTelemetry();
+
+/* ── SCRAMBLE EFFECT ── */
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%@&$#/_";
+function scramble(el) {
+  const final = el.dataset.scramble || el.textContent;
+  let iteration = 0;
+  const interval = setInterval(() => {
+    el.innerText = final.split("").map((char, index) => {
+      if (index < iteration) return final[index];
+      return chars[Math.floor(Math.random() * chars.length)];
+    }).join("");
+    if (iteration >= final.length) clearInterval(interval);
+    iteration += 1 / 3;
+  }, 30);
+}
+
 /* ── SCROLL REVEAL ── */
 const flash=document.getElementById('impactFlash');
 const obs=new IntersectionObserver(entries=>{
@@ -60,6 +118,10 @@ const obs=new IntersectionObserver(entries=>{
     if(e.isIntersecting){
       e.target.classList.add('visible');
       if(flash){flash.style.opacity='1';setTimeout(()=>flash.style.opacity='0',60);}
+      // Trigger scramble on titles
+      if(e.target.classList.contains('section-title')) {
+        scramble(e.target);
+      }
     }
   });
 },{threshold:.1,rootMargin:'0px 0px -36px 0px'});
@@ -92,7 +154,7 @@ function renderFeatured(){
     if(p.url) links.push(`<a href="${p.url}" target="_blank" class="pr-link pr-link-gh"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> Code</a>`);
     if(p.live) links.push(`<a href="${p.live}" target="_blank" class="pr-link pr-link-live"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg> Live</a>`);
     const linksCol=links.length?`<div class="pr-links">${links.join('')}</div>`:`<div class="pr-links"><span class="pr-badge">Featured</span></div>`;
-    return `<div class="project-row">
+    return `<div class="project-row with-brackets">
       <div class="pr-bar"></div>
       <div class="pr-meta">
         <div class="pr-index">PRJ-${String(i+1).padStart(2,'0')}</div>
@@ -137,7 +199,7 @@ async function loadGitHub(){
     meta.innerHTML=`<div class="gh-stat-pill"><span class="dot"></span><strong>${repos.length}</strong>&nbsp;public repos</div><div class="gh-stat-pill"><strong>${stars}</strong>&nbsp;total stars</div><div class="gh-stat-pill"><strong>${user.followers}</strong>&nbsp;followers</div>`;
     // Lucide file icon as inline SVG for repo cards
     const repoIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:.4;flex-shrink:0"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>`;
-    grid.innerHTML=repos.map(r=>`<a href="${r.html_url}" target="_blank" class="gh-repo-card">
+    grid.innerHTML=repos.map(r=>`<a href="${r.html_url}" target="_blank" class="gh-repo-card with-brackets">
       <div class="gh-repo-name">${repoIcon}${r.name}</div>
       <div class="gh-repo-desc">${r.description||'No description provided.'}</div>
       <div class="gh-repo-footer">

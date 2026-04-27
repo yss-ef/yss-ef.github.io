@@ -27,6 +27,11 @@ html{scroll-behavior:smooth;font-size:20px;}
   --crt-vign: radial-gradient(ellipse at center,transparent 65%,rgba(0,0,0,.06) 100%);
   --noise-op: .018;
   --nav-bg:   rgba(232,237,245,.92);
+  --glass-bg: rgba(232,237,245,.6);
+  --glass-border: rgba(255,255,255,.4);
+  --bracket-color: var(--accent);
+  --glitch-1: rgba(176,56,112,.3);
+  --glitch-2: rgba(42,114,200,.3);
 }
 
   /* ═══ DARK THEME OVERRIDES ═══ */
@@ -43,6 +48,9 @@ html{scroll-behavior:smooth;font-size:20px;}
   --accent:     #7eb8f7;
   --accent2:    #f0c0d8;
   --nav-bg:     rgba(10,15,24,.92);
+  --glass-bg:   rgba(16,31,46,.6);
+  --glass-border: rgba(255,255,255,.1);
+  --bracket-color: var(--accent);
   --scanline-op:.03;
   --noise-op:   .04;
   --crt-vign:   radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.4) 100%);
@@ -80,8 +88,40 @@ body::after{
     linear-gradient(90deg,var(--border) 1px,transparent 1px);
   background-size:48px 48px;opacity:.6;transition:opacity .35s;
 }
+.grid-bg::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(126,184,247,0.1), transparent 40%);
+  opacity:0;transition:opacity .5s;
+}
+[data-theme="dark"] .grid-bg::after{opacity:1;}
 
-/* ═══ CURSOR ═══ */
+/* ═══ TARGETING BRACKETS ═══ */
+.with-brackets{position:relative;}
+.with-brackets::before, .with-brackets::after{
+  content:'';position:absolute;width:12px;height:12px;
+  border:1.5px solid var(--bracket-color);opacity:0;transition:all .3s ease;
+  pointer-events:none;z-index:10;
+}
+/* TL bracket */
+.with-brackets::before{top:-4px;left:-4px;border-right:0;border-bottom:0;}
+/* BR bracket */
+.with-brackets::after{bottom:-4px;right:-4px;border-left:0;border-top:0;}
+
+.with-brackets:hover::before{opacity:1;transform:translate(-2px,-2px);}
+.with-brackets:hover::after{opacity:1;transform:translate(2px,2px);}
+
+/* Apply brackets to specific elements */
+.project-row, .contact-card, .dossier, .cert-row {
+  position:relative;
+}
+
+.dossier{
+  background:var(--glass-bg);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--glass-border);
+  padding:3rem;position:relative;
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+}
 #cur{position:fixed;pointer-events:none;z-index:9999;}
 #cur-cross{width:16px;height:16px;transform:translate(-50%,-50%);position:relative;}
 #cur-cross::before{content:'';position:absolute;width:100%;height:1px;background:var(--accent);top:50%;left:0;box-shadow:var(--glow-b);}
@@ -453,4 +493,37 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
   .dossier{padding:1.5rem;}
   .dossier-header{flex-direction:column;gap:.4rem;}
   .project-row{grid-template-columns:3px 1fr;}
+}
+
+/* ═══ TELEMETRY WIDGET ═══ */
+#telemetry{
+  position:fixed;bottom:2rem;left:2rem;z-index:9950;
+  font-family:var(--mono);font-size:.55rem;color:var(--text3);
+  background:var(--glass-bg);backdrop-filter:blur(8px);
+  border:1px solid var(--border);padding:.6rem .8rem;
+  display:flex;flex-direction:column;gap:4px;
+  pointer-events:none;letter-spacing:.05em;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);
+}
+.tel-row{display:flex;justify-content:space-between;gap:1.5rem;}
+.tel-val{color:var(--accent);font-weight:600;}
+
+/* ═══ STAGGERED REVEAL ═══ */
+.delay-1{transition-delay:.1s!important;}
+.delay-2{transition-delay:.2s!important;}
+.delay-3{transition-delay:.3s!important;}
+.delay-4{transition-delay:.4s!important;}
+.delay-5{transition-delay:.5s!important;}
+
+/* ═══ GLITCH EFFECT ═══ */
+@keyframes glitch-anim {
+  0% { transform: translate(0); text-shadow: none; }
+  20% { transform: translate(-2px, 1px); text-shadow: 2px 0 var(--glitch-1), -2px 0 var(--glitch-2); }
+  40% { transform: translate(-2px, -1px); text-shadow: -2px 0 var(--glitch-1), 2px 0 var(--glitch-2); }
+  60% { transform: translate(2px, 1px); text-shadow: 2px 0 var(--glitch-1), -2px 0 var(--glitch-2); }
+  80% { transform: translate(2px, -1px); text-shadow: -2px 0 var(--glitch-1), 2px 0 var(--glitch-2); }
+  100% { transform: translate(0); text-shadow: none; }
+}
+.glitch-trigger.visible {
+  animation: glitch-anim .25s ease-out forwards;
 }
