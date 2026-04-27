@@ -103,21 +103,6 @@ function updateUptime(){
 }
 setInterval(updateUptime,1000);updateUptime();
 
-/* ── SCRAMBLE EFFECT ── */
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%@&$#/_";
-function scrambleText(el) {
-  const final = el.dataset.scramble || el.textContent;
-  let iteration = 0;
-  const interval = setInterval(() => {
-    el.innerText = final.split("").map((char, index) => {
-      if (index < iteration) return final[index];
-      return chars[Math.floor(Math.random() * chars.length)];
-    }).join("");
-    if (iteration >= final.length) clearInterval(interval);
-    iteration += 1 / 3;
-  }, 30);
-}
-
 /* ── SCROLL REVEAL ── */
 const flash=document.getElementById('impactFlash');
 const obs=new IntersectionObserver(entries=>{
@@ -125,9 +110,6 @@ const obs=new IntersectionObserver(entries=>{
     if(e.isIntersecting){
       e.target.classList.add('visible');
       if(flash){flash.style.opacity='1';setTimeout(()=>flash.style.opacity='0',60);}
-      
-      // Trigger scramble on child targets
-      e.target.querySelectorAll('.scramble-target').forEach(st => scrambleText(st));
     }
   });
 },{threshold:.1,rootMargin:'0px 0px -36px 0px'});
