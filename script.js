@@ -133,11 +133,11 @@ const LC={JavaScript:'#f1e05a',TypeScript:'#3178c6',Java:'#b07219',PHP:'#4F5D95'
 
 /* ── PROJECTS DATA ── */
 const featured=[
-  {name:'CRM SaaS Platform',tags:['SaaS','CRM','AI','Angular','Spring Boot'],desc:'Full CRM SaaS built from scratch at Broker Immobilier. Angular + Spring Boot, RAG system, and automated document generation.',langs:['Java','TypeScript','Python'],url:null,live:null},
-  {name:'Cloud Infrastructure Supervision',tags:['AWS','Zabbix','Linux','Monitoring'],desc:'Infrastructure monitoring using Zabbix on AWS, Linux and Windows servers — system health, alerts, and performance metrics.',langs:['Python','Shell'],url:null,live:null},
+  {name:'CRM SaaS Platform',tags:['SaaS','CRM','AI','Angular','Spring Boot'],desc:'Full CRM SaaS built from scratch at Broker Immobilier. Angular + Spring Boot, RAG system, and automated document generation.',langs:['Java','TypeScript'],url:null,live:null},
+  {name:'Cloud Infrastructure Supervision',tags:['AWS','Zabbix','Linux','Monitoring'],desc:'Infrastructure monitoring using Zabbix on AWS, Linux and Windows servers — system health, alerts, and performance metrics.',langs:['Shell'],url:null,live:null},
   {name:'Firewall Configuration — OPNsense',tags:['Security','Networking','VLANs'],desc:'OPNsense firewall with custom rules, VLANs, and network segmentation to secure a simulated enterprise infrastructure.',langs:['Shell'],url:null,live:null},
   {name:'Mobile Portfolio App',tags:['Mobile','Flutter','UI'],desc:'Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:null,live:null},
-  {name:'Smart Digital Banking System',tags:['FinTech','JWT','RAG','REST API'],desc:'Spring Boot REST API with JWT/RBAC, AI-powered RAG assistant for customer support, Angular dashboard with ChartJS.',langs:['Java','TypeScript','Python'],url:null,live:null},
+  {name:'Smart Digital Banking System',tags:['FinTech','JWT','RAG','REST API'],desc:'Spring Boot REST API with JWT/RBAC, AI-powered RAG assistant for customer support, Angular dashboard with ChartJS.',langs:['Java','TypeScript'],url:null,live:null},
   {name:'Decentralized E-Learning Platform',tags:['Web3','Ethereum','IPFS','DApp'],desc:'Solidity Smart Contracts on Ethereum, React.js frontend, Web3.js integration. Final-year project at FST Errachidia.',langs:['Solidity','JavaScript'],url:null,live:null},
   {name:'Dolibarr ERP Custom Modules',tags:['ERP','Treasury','Tax','PDF'],desc:'4 custom modules for Dolibarr ERP — Treasury & Tax management, workflow automation, and query performance optimization.',langs:['PHP','SQL'],url:null,live:null}
 ];
