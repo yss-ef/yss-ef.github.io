@@ -89,10 +89,10 @@ themeBtn.addEventListener('click',()=>{
     html.setAttribute('data-theme',nextTheme);
     // swap lucide icon
     themeIcon.innerHTML = nextTheme==='dark'
-      ? '<i data-lucide="moon" class="icon-theme"></i>'
-      : '<i data-lucide="sun" class="icon-theme"></i>';
+      ? '<i data-lucide="sun" class="icon-theme"></i>'
+      : '<i data-lucide="moon" class="icon-theme"></i>';
     lucide.createIcons();
-    themeBtn.setAttribute('data-label', nextTheme==='dark'?'DARK MODE':'LIGHT MODE');
+    themeBtn.setAttribute('data-label', nextTheme==='dark'?'LIGHT MODE':'DARK MODE');
     themeIcon.classList.remove('spin-out');
   },200);
 });
