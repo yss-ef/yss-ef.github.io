@@ -79,20 +79,29 @@ const html=document.documentElement;
 const themeBtn=document.getElementById('themeToggle');
 const themeIcon=document.getElementById('themeIcon');
 
+const updateThemeUI = (theme) => {
+  html.setAttribute('data-theme', theme);
+  // swap lucide icon
+  themeIcon.innerHTML = theme === 'dark'
+    ? '<i data-lucide="sun" class="icon-theme"></i>'
+    : '<i data-lucide="moon" class="icon-theme"></i>';
+  lucide.createIcons();
+  themeBtn.setAttribute('data-label', theme === 'dark' ? 'LIGHT MODE' : 'DARK MODE');
+  localStorage.setItem('icarus-theme', theme);
+};
+
+// Initialize theme
+const savedTheme = localStorage.getItem('icarus-theme') || 'dark';
+updateThemeUI(savedTheme);
+
 themeBtn.addEventListener('click',()=>{
-  const isDark=html.getAttribute('data-theme')==='dark';
-  const nextTheme=isDark?'light':'dark';
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const nextTheme = isDark ? 'light' : 'dark';
 
   themeIcon.classList.add('spin-out');
 
   setTimeout(()=>{
-    html.setAttribute('data-theme',nextTheme);
-    // swap lucide icon
-    themeIcon.innerHTML = nextTheme==='dark'
-      ? '<i data-lucide="sun" class="icon-theme"></i>'
-      : '<i data-lucide="moon" class="icon-theme"></i>';
-    lucide.createIcons();
-    themeBtn.setAttribute('data-label', nextTheme==='dark'?'LIGHT MODE':'DARK MODE');
+    updateThemeUI(nextTheme);
     themeIcon.classList.remove('spin-out');
   },200);
 });
