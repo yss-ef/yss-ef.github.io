@@ -126,13 +126,15 @@ const LC={JavaScript:'#f1e05a',TypeScript:'#3178c6',Java:'#b07219',PHP:'#4F5D95'
 
 /* ── PROJECTS DATA ── */
 const featured=[
+  {name:'devctl — Development Orchestrator',tags:['CLI','Automation','Python','Docker','WIP'],desc:'A unified CLI tool to automate the local development lifecycle. Orchestrates Spring Boot, Angular, and Vue.js environments with CRUD scaffolding and parallel process management.',langs:['Python','Shell'],url:'https://github.com/yss-ef/devctl---Local-Development-Orchestrator',live:null,wip:true},
+  {name:'Mundia Library Management System',tags:['Next.js 15','React 19','Drizzle','MySQL','NextAuth'],desc:'Full-stack university library platform with student and admin portals. Features automated overdue reminders, book recommendations, and fine management.',langs:['TypeScript','SQL'],url:'https://github.com/AnouarMohamed/Mundia_library',live:null},
   {name:'CRM SaaS Platform',tags:['SaaS','CRM','AI','Angular','Spring Boot'],desc:'Full CRM SaaS built from scratch at Broker Immobilier. Angular + Spring Boot, RAG system, and automated document generation.',langs:['Java','TypeScript'],url:null,live:null},
-  {name:'Cloud Infrastructure Supervision',tags:['AWS','Zabbix','Linux','Monitoring'],desc:'Infrastructure monitoring using Zabbix on AWS, Linux and Windows servers — system health, alerts, and performance metrics.',langs:['Shell'],url:null,live:null},
-  {name:'Firewall Configuration — OPNsense',tags:['Security','Networking','VLANs'],desc:'OPNsense firewall with custom rules, VLANs, and network segmentation to secure a simulated enterprise infrastructure.',langs:['Shell'],url:null,live:null},
-  {name:'Mobile Portfolio App',tags:['Mobile','Flutter','UI'],desc:'Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:null,live:null},
-  {name:'Smart Digital Banking System',tags:['FinTech','JWT','RAG','REST API'],desc:'Spring Boot REST API with JWT/RBAC, AI-powered RAG assistant for customer support, Angular dashboard with ChartJS.',langs:['Java','TypeScript'],url:null,live:null},
-  {name:'Decentralized E-Learning Platform',tags:['Web3','Ethereum','IPFS','DApp'],desc:'Solidity Smart Contracts on Ethereum, React.js frontend, Web3.js integration. Final-year project at FST Errachidia.',langs:['Solidity','JavaScript'],url:null,live:null},
-  {name:'Dolibarr ERP Custom Modules',tags:['ERP','Treasury','Tax','PDF'],desc:'4 custom modules for Dolibarr ERP — Treasury & Tax management, workflow automation, and query performance optimization.',langs:['PHP','SQL'],url:null,live:null}
+  {name:'Smart Digital Banking System',tags:['FinTech','JWT','RAG','REST API'],desc:'Spring Boot REST API with JWT/RBAC, AI-powered RAG assistant for customer support, Angular dashboard with ChartJS.',langs:['Java','TypeScript'],url:'https://github.com/yss-ef/DIGITAL-BANKING-SYSTEM',live:null},
+  {name:'Cloud Infrastructure Supervision',tags:['AWS','Zabbix','Linux','Monitoring'],desc:'Infrastructure monitoring using Zabbix on AWS, Linux and Windows servers — system health, alerts, and performance metrics.',langs:['Shell'],url:'https://github.com/yss-ef/AWS-ZABBIX-MONITORING',live:null},
+  {name:'Decentralized E-Learning Platform',tags:['Web3','Ethereum','IPFS','DApp'],desc:'Solidity Smart Contracts on Ethereum, React.js frontend, Web3.js integration. Final-year project at FST Errachidia.',langs:['Solidity','JavaScript'],url:'https://github.com/yss-ef/Academic-Repository-Blockchain',live:null},
+  {name:'Mobile Portfolio App',tags:['Mobile','Flutter','UI'],desc:'Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:'https://github.com/yss-ef/FLUTTER-INTERACTIVE-PORTFOLIO',live:null},
+  {name:'Dolibarr ERP Custom Modules',tags:['ERP','Treasury','Tax','PDF'],desc:'4 custom modules for Dolibarr ERP — Treasury & Tax management, workflow automation, and query performance optimization.',langs:['PHP','SQL'],url:'https://github.com/yss-ef/Dolibarr-Custom-Modules',live:null},
+  {name:'Firewall Configuration — OPNsense',tags:['Security','Networking','VLANs'],desc:'OPNsense firewall with custom rules, VLANs, and network segmentation to secure a simulated enterprise infrastructure.',langs:['Shell'],url:null,live:null}
 ];
 
 let activeFilter='all';
@@ -147,7 +149,16 @@ function renderFeatured(){
     const links=[];
     if(p.url) links.push(`<a href="${p.url}" target="_blank" class="pr-link pr-link-gh"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> Code</a>`);
     if(p.live) links.push(`<a href="${p.live}" target="_blank" class="pr-link pr-link-live"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg> Live</a>`);
-    const linksCol=links.length?`<div class="pr-links">${links.join('')}</div>`:`<div class="pr-links"><span class="pr-badge">Featured</span></div>`;
+    
+    let linksCol;
+    if(links.length) {
+      linksCol = `<div class="pr-links">${links.join('')}${p.wip ? `<span class="pr-badge" style="border-color:var(--accent2);color:var(--accent2);margin-top:.4rem">WIP</span>` : ''}</div>`;
+    } else {
+      const badgeText = p.wip ? 'WIP' : 'Featured';
+      const badgeStyle = p.wip ? 'border-color:var(--accent2);color:var(--accent2)' : '';
+      linksCol = `<div class="pr-links"><span class="pr-badge" style="${badgeStyle}">${badgeText}</span></div>`;
+    }
+
     return `<div class="project-row">
       <div class="pr-bar"></div>
       <div class="pr-meta">
