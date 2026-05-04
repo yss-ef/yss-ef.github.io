@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOSSIER: Dolibarr Modules // ICARUS_SYS</title>
+    <link rel="stylesheet" href="dossier.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</head>
+<body>
+    <header class="dossier-header">
+        <div>
+            <div class="dossier-id">PROJECT_REF: YF-026-DOLIBARR</div>
+            <h1 class="dossier-title">Dolibarr ERP Custom Modules</h1>
+        </div>
+        <div class="dossier-classification">// RESTRICTED //</div>
+    </header>
+
+    <section>
+        <div class="section-label">System Objective</div>
+        <p>A suite of customized PHP extensions for the Dolibarr ERP ecosystem. These modules automate manual accounting tasks (Treasury, Ventilation, Tax) and generate standardized professional intervention reports (PV) directly from ERP data.</p>
+    </section>
+
+    <section>
+        <div class="section-label">Module Integration Logic</div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+            graph TD
+                Doli[Dolibarr Core] --> Hooks[Hook Manager]
+                Doli --> UI[Template Engine]
+                Doli --> DB[(Relational DB)]
+                Hooks --> Mod1[Treasury Module]
+                Mod1 --> Logic[Cashflow Calculation]
+                Logic --> DB
+                Mod1 --> UI
+                Doli --> PDF[ODT/PDF Generator]
+                Mod2[PV Generator] --> PDF
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Document Generation Sequence</div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+            sequenceDiagram
+                participant OP as Accountant
+                participant ERP as Dolibarr UI
+                participant MOD as Custom Module
+                participant DB as Database
+                participant ENGINE as PDF Engine
+                OP->>ERP: Select Invoice/Intervention
+                ERP->>MOD: Trigger GenerateReport()
+                MOD->>DB: Fetch Financial Data
+                DB-->>MOD: Recordset
+                MOD->>MOD: Apply Tax Logic
+                MOD->>ENGINE: Stream Data to Template
+                ENGINE-->>OP: Download PDF
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Mission Post-Mortem</div>
+        <div class="post-mortem-grid">
+            <div class="post-mortem-card">
+                <h3>The Challenge</h3>
+                <p>Integrating custom business rules into a legacy ERP structure without modifying the core files (to maintain upgradeability). Optimizing SQL queries for the treasury module that aggregated millions of accounting entries.</p>
+            </div>
+            <div class="post-mortem-card">
+                <h3>The Solution</h3>
+                <p>Leveraged Dolibarr's native <code>HookManager</code> and <code>ModuleDescriptor</code> patterns to ensure 100% clean integration. Implemented database indexing on key financial columns and used specialized PHP generators to handle large data exports without memory overflows.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Youssef Fellah // ICARUS_SYS // Technical Dossier v2.26
+    </footer>
+</body>
+</html>

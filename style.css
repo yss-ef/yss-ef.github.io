@@ -560,6 +560,54 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
 .footer-handle{color:var(--accent);letter-spacing:.14em;}
 .footer-myth{font-family:var(--serif);font-style:italic;font-size:.68rem;color:var(--text3);}
 
+/* ═══ DOSSIER MODAL ═══ */
+.dossier-modal {
+  position: fixed; inset: 0; z-index: 11000;
+  display: none; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.dossier-modal.active { display: flex; }
+
+.dossier-modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10, 15, 24, 0.95);
+  backdrop-filter: blur(15px);
+}
+
+.dossier-modal-container {
+  position: relative; width: 100%; max-width: 1000px; height: 90vh;
+  background: var(--bg); border: 1px solid var(--accent);
+  display: flex; flex-direction: column;
+  box-shadow: 0 0 50px rgba(126, 184, 247, 0.15);
+  animation: fadeUp 0.4s ease both;
+}
+
+.dossier-modal-header {
+  padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--surface);
+}
+
+.dossier-modal-status {
+  font-size: 0.6rem; color: var(--accent); letter-spacing: 0.15em;
+}
+
+.dossier-close-btn {
+  background: transparent; border: 1px solid var(--border2);
+  color: var(--text3); font-family: var(--mono); font-size: 0.55rem;
+  padding: 0.35rem 0.8rem; cursor: none; transition: all 0.2s;
+  display: flex; align-items: center; gap: 8px;
+}
+.dossier-close-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+.dossier-modal-body { flex: 1; overflow: hidden; }
+#dossierFrame { width: 100%; height: 100%; background: var(--bg); }
+
+@media (max-width: 768px) {
+  .dossier-modal { padding: 0.5rem; }
+  .dossier-modal-container { height: 100vh; }
+}
+
 /* ═══ RESPONSIVE ═══ */
 @media (hover: none) and (pointer: coarse) {
   #cur, #cur-ring { display: none !important; }

@@ -1,0 +1,135 @@
+/* ═══ DOSSIER SYSTEM ═══ */
+:root {
+  --bg: #0a0f18;
+  --bg2: #0f1724;
+  --surface: #161f2e;
+  --text: #e0e6ed;
+  --text2: #a0aec0;
+  --text3: #64748b;
+  --accent: #7eb8f7;
+  --accent2: #f0c0d8;
+  --border: rgba(126,184,247,0.15);
+  --mono: 'Share Tech Mono', monospace;
+  --serif: 'Cormorant Garamond', serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  margin: 0;
+  padding: 2rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ═══ HEADER ═══ */
+.dossier-header {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.dossier-id {
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+}
+
+.dossier-title {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin: 0.5rem 0;
+}
+
+.dossier-classification {
+  background: var(--accent2);
+  color: var(--bg);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+/* ═══ SECTIONS ═══ */
+section {
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-mortem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.post-mortem-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  position: relative;
+}
+
+.post-mortem-card h3 {
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.post-mortem-card p {
+  font-size: 0.85rem;
+  color: var(--text2);
+  margin: 0;
+}
+
+/* ═══ DIAGRAMS ═══ */
+.diagram-container {
+  background: #111827;
+  border: 1px solid var(--border);
+  padding: 2rem;
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+/* Mermaid Customization */
+.mermaid {
+  background: transparent !important;
+}
+
+/* ═══ FOOTER ═══ */
+footer {
+  margin-top: 4rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+  font-size: 0.6rem;
+  color: var(--text3);
+  text-align: center;
+}
+
+/* ═══ SCROLLBAR ═══ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--surface); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+@media (max-width: 768px) {
+  .post-mortem-grid { grid-template-columns: 1fr; }
+  .dossier-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}

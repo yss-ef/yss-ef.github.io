@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOSSIER: Zabbix Monitoring // ICARUS_SYS</title>
+    <link rel="stylesheet" href="dossier.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</head>
+<body>
+    <header class="dossier-header">
+        <div>
+            <div class="dossier-id">PROJECT_REF: YF-026-ZABBIX</div>
+            <h1 class="dossier-title">AWS & Zabbix Infrastructure Monitoring</h1>
+        </div>
+        <div class="dossier-classification">// RESTRICTED //</div>
+    </header>
+
+    <section>
+        <div class="section-label">System Objective</div>
+        <p>A full-stack infrastructure supervision system deployed on AWS. Utilizing Zabbix, it monitors the health, performance, and security of distributed Linux and Windows servers, providing real-time alerting and visual dashboards.</p>
+    </section>
+
+    <section>
+        <div class="section-label">Infrastructure Topology</div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+            graph TD
+                AWS[AWS Cloud] --> VPC[VPC]
+                VPC --> ZS[Zabbix Server EC2]
+                VPC --> DB[(RDS PostgreSQL)]
+                VPC --> SG[Security Groups]
+                ZS --> Agent1[Linux Web Server]
+                ZS --> Agent2[Windows DB Server]
+                ZS --> Agent3[Remote IoT Gateway]
+                Agent1 -- encrypted --o ZS
+                Agent2 -- encrypted --o ZS
+                Agent3 -- SNMP --o ZS
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Alerting Sequence</div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+            sequenceDiagram
+                participant AG as Zabbix Agent
+                participant ZS as Zabbix Server
+                participant TR as Trigger Logic
+                participant OP as Operator
+                AG->>ZS: Push Metrics (CPU > 90%)
+                ZS->>TR: Evaluate Threshold
+                TR->>TR: State = PROBLEM
+                ZS->>OP: Send Media Alert (Email/Telegram)
+                OP->>ZS: Acknowledge Event
+                OP->>AG: Execute Remote Command (Restart Service)
+                AG-->>ZS: Recovery Metric
+                ZS->>TR: State = OK
+                ZS->>OP: Resolution Notification
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Mission Post-Mortem</div>
+        <div class="post-mortem-grid">
+            <div class="post-mortem-card">
+                <h3>The Challenge</h3>
+                <p>Securing monitoring traffic across public networks without compromising server performance. Configuring low-level discovery (LLD) to automatically detect and monitor dynamic AWS resources (EC2 instances, EBS volumes).</p>
+            </div>
+            <div class="post-mortem-card">
+                <h3>The Solution</h3>
+                <p>Implemented PSK (Pre-Shared Key) encryption for all agent-to-server communications. Developed custom Zabbix templates with LLD scripts that use the AWS CLI to discover instance tags and auto-assign monitoring profiles, creating a self-healing monitoring mesh.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Youssef Fellah // ICARUS_SYS // Technical Dossier v2.26
+    </footer>
+</body>
+</html>

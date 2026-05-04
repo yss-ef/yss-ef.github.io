@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOSSIER: Flutter Portfolio // ICARUS_SYS</title>
+    <link rel="stylesheet" href="dossier.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
+</head>
+<body>
+    <header class="dossier-header">
+        <div>
+            <div class="dossier-id">PROJECT_REF: YF-026-FLUTTER</div>
+            <h1 class="dossier-title">Interactive Flutter Portfolio</h1>
+        </div>
+        <div class="dossier-classification">// RESTRICTED //</div>
+    </header>
+
+    <section>
+        <div class="section-label">System Objective</div>
+        <p>A native mobile application built with Flutter to showcase a professional digital identity. It features interactive UI components, smooth transitions, and a clean architecture to present projects, skills, and certifications across Android and iOS.</p>
+    </section>
+
+    <section>
+        <div class="section-label">Widget Architecture</div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+            graph TD
+                App[MaterialApp] --> Main[MainScreen]
+                Main --> Nav[BottomNavigationBar]
+                Main --> Hero[HeroSection]
+                Main --> About[AboutSection]
+                Main --> Projects[ProjectGrid]
+                Projects --> Card[ProjectCard]
+                Card --> Detail[ProjectDetailModal]
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Data Management Flow</div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+            sequenceDiagram
+                participant UI as View Layer
+                participant PROV as Provider/State
+                participant MOD as Project Model
+                participant JSON as Assets/Data
+                UI->>PROV: Initialize()
+                PROV->>JSON: Load projects.json
+                JSON-->>PROV: raw data
+                PROV->>MOD: Parse to List&lt;Project&gt;
+                MOD-->>PROV: typed list
+                PROV-->>UI: notifyListeners()
+                UI->>UI: Build ListView
+            </pre>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-label">Mission Post-Mortem</div>
+        <div class="post-mortem-grid">
+            <div class="post-mortem-card">
+                <h3>The Challenge</h3>
+                <p>Creating a responsive layout that feels native on both small smartphones and large tablets while maintaining a high-performance 60FPS animation speed for complex UI transitions.</p>
+            </div>
+            <div class="post-mortem-card">
+                <h3>The Solution</h3>
+                <p>Utilized the <code>LayoutBuilder</code> and <code>MediaQuery</code> widgets to implement a custom responsive grid system. Leveraged the <code>Provider</code> package for clean state management and used <code>AnimatedBuilder</code> to optimize repaint boundaries, ensuring smooth performance across all devices.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Youssef Fellah // ICARUS_SYS // Technical Dossier v2.26
+    </footer>
+</body>
+</html>
