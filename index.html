@@ -8,8 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,13 +18,6 @@
 
 <div class="scanlines"></div>
 <div class="grid-bg"></div>
-<div class="global-scanline"></div>
-<div class="hud-frame">
-  <div class="hud-bracket tl"></div>
-  <div class="hud-bracket tr"></div>
-  <div class="hud-bracket bl"></div>
-  <div class="hud-bracket br"></div>
-</div>
 <div id="impactFlash"></div>
 <div id="cur">
   <div class="cur-bracket tl"></div>
@@ -120,7 +111,7 @@
     <div class="dossier-corner tl"></div>
     <div class="dossier-corner br"></div>
     <div class="dossier-header">
-      <span class="dossier-classification glitch" data-text="// RESTRICTED //">// RESTRICTED //</span>
+      <span class="dossier-classification">// RESTRICTED //</span>
       <span>FILE NO. YF-026-CS · UNIT: FELLAH_YOUSSEF · ʏ ᴄ x ʀ ᴠ s</span>
     </div>
     <div class="about-grid">
@@ -161,34 +152,8 @@
     <div class="section-label">Arsenal</div>
     <h2 class="section-title"><i data-lucide="layers" class="icon-lg"></i> Technical <em>Stack</em></h2>
   </div>
-
-  <div class="skills-view-controls reveal">
-    <button class="view-btn active" data-view="tags"><i data-lucide="tag" class="icon-sm"></i> Raw Data</button>
-    <button class="view-btn" data-view="network"><i data-lucide="share-2" class="icon-sm"></i> System Map</button>
-    <button class="view-btn" data-view="radar"><i data-lucide="crosshair" class="icon-sm"></i> Radar Stats</button>
-  </div>
-
-  <div id="skillsRadarContainer" class="skills-viz-container reveal">
-    <div class="radar-grid">
-      <div class="radar-item"><canvas id="radarBackend"></canvas></div>
-      <div class="radar-item"><canvas id="radarFrontend"></canvas></div>
-      <div class="radar-item"><canvas id="radarData"></canvas></div>
-      <div class="radar-item"><canvas id="radarCloud"></canvas></div>
-    </div>
-  </div>
-
-  <div id="skillsNetworkContainer" class="skills-viz-container reveal">
-    <div id="skillsNetwork"></div>
-    <div class="network-legend">
-      <span class="legend-item"><span class="dot" style="background:var(--accent)"></span> Core</span>
-      <span class="legend-item"><span class="dot" style="background:var(--accent2)"></span> Tool</span>
-      <span class="legend-item"><span class="dot" style="background:var(--accent3)"></span> Data</span>
-    </div>
-  </div>
-
-  <div id="skillsTagsContainer" class="skills-viz-container reveal active">
-    <div class="skills-categories">
-      <!-- Backend & Core -->
+  <div class="skills-categories reveal">
+    <!-- Backend & Core -->
     <div class="skill-cat">
       <div class="skill-cat-icon"><i data-lucide="cpu" class="icon-cat"></i></div>
       <div class="skill-cat-name">Backend &amp; Core</div>
@@ -472,20 +437,6 @@
   <span class="footer-myth">flew too close — and touched it anyway</span>
   <span>Youssef Fellah © 2026 · HTML · CSS · JS · GitHub API · Fedora 43</span>
 </footer>
-
-<!-- DOSSIER OVERLAY -->
-<div id="dossierModal" class="dossier-modal">
-  <div class="dossier-modal-backdrop"></div>
-  <div class="dossier-modal-container">
-    <div class="dossier-modal-header">
-      <div class="dossier-modal-status"><span class="sys-blink">◆</span> ACCESSING_RESTRICTED_DATA...</div>
-      <button id="closeDossier" class="dossier-close-btn"><i data-lucide="x" class="icon-md"></i> CLOSE_TERMINAL</button>
-    </div>
-    <div class="dossier-modal-body">
-      <iframe id="dossierFrame" src="" frameborder="0"></iframe>
-    </div>
-  </div>
-</div>
 
 <script src="script.js"></script>
 </body>

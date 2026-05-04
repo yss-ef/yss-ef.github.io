@@ -7,67 +7,6 @@ const initLucide = () => {
 
 document.addEventListener('DOMContentLoaded', initLucide);
 
-/* ── TEXT SCRAMBLE ── */
-class TextScramble {
-  constructor(el) {
-    this.el = el;
-    this.chars = '!<>-_\\/[]{}—=+*^?#________';
-    this.update = this.update.bind(this);
-  }
-  setText(newText) {
-    const oldText = this.el.innerText;
-    const length = Math.max(oldText.length, newText.length);
-    const promise = new Promise((resolve) => this.resolve = resolve);
-    this.queue = [];
-    for (let i = 0; i < length; i++) {
-      const from = oldText[i] || '';
-      const to = newText[i] || '';
-      const start = Math.floor(Math.random() * 40);
-      const end = start + Math.floor(Math.random() * 40);
-      this.queue.push({ from, to, start, end });
-    }
-    cancelAnimationFrame(this.frameRequest);
-    this.frame = 0;
-    this.update();
-    return promise;
-  }
-  update() {
-    let output = '';
-    let complete = 0;
-    for (let i = 0, n = this.queue.length; i < n; i++) {
-      let { from, to, start, end, char } = this.queue[i];
-      if (this.frame >= end) {
-        complete++;
-        output += to;
-      } else if (this.frame >= start) {
-        if (!char || Math.random() < 0.28) {
-          char = this.randomChar();
-          this.queue[i].char = char;
-        }
-        output += `<span class="sys-blink">${char}</span>`;
-      } else {
-        output += from;
-      }
-    }
-    this.el.innerHTML = output;
-    if (complete === this.queue.length) {
-      this.resolve();
-    } else {
-      this.frameRequest = requestAnimationFrame(this.update);
-      this.frame++;
-    }
-  }
-  randomChar() {
-    return this.chars[Math.floor(Math.random() * this.chars.length)];
-  }
-}
-
-document.querySelectorAll('.section-title em, .hero-handle, .nav-logo-handle, .footer-handle').forEach(el => {
-  const fx = new TextScramble(el);
-  const original = el.innerText;
-  el.addEventListener('mouseenter', () => fx.setText(original));
-});
-
 /* ── BOOT SEQUENCE ── */
 const bootMessages = [
   "INITIALIZING ICARUS_OS...",
@@ -106,148 +45,6 @@ if (bootScreen) {
   runBoot();
 }
 
-/* ── SKILLS VISUALIZATION ── */
-let network = null;
-const charts = [];
-
-function initCharts() {
-  const commonOptions = {
-    scales: {
-      r: {
-        angleLines: { color: 'rgba(126,184,247,0.1)' },
-        grid: { color: 'rgba(126,184,247,0.1)' },
-        pointLabels: { color: '#64748b', font: { family: 'Share Tech Mono', size: 10 } },
-        ticks: { display: false, maxTicksLimit: 5 },
-        suggestedMin: 0,
-        suggestedMax: 100
-      }
-    },
-    plugins: { legend: { display: false } },
-    responsive: true,
-    maintainAspectRatio: false
-  };
-
-  const createRadar = (id, label, labels, data) => {
-    const ctx = document.getElementById(id);
-    if (!ctx) return;
-    charts.push(new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels,
-        datasets: [{
-          label,
-          data,
-          backgroundColor: 'rgba(126,184,247,0.15)',
-          borderColor: '#7eb8f7',
-          borderWidth: 1.5,
-          pointBackgroundColor: '#7eb8f7',
-          pointBorderColor: '#0a0f18',
-          pointHoverBackgroundColor: '#fff',
-          pointRadius: 2
-        }]
-      },
-      options: commonOptions
-    }));
-  };
-
-  createRadar('radarBackend', 'Backend', ['Java', 'Spring', 'PHP', 'Node.js', 'Python', 'Solidity'], [95, 90, 85, 80, 85, 75]);
-  createRadar('radarFrontend', 'Frontend', ['Angular', 'React', 'Flutter', 'TypeScript', 'Tailwind', 'Web3.js'], [92, 85, 80, 90, 85, 70]);
-  createRadar('radarData', 'Data', ['PostgreSQL', 'MySQL', 'MongoDB', 'Power BI', 'PL/SQL', 'Hibernate'], [85, 88, 75, 82, 80, 85]);
-  createRadar('radarCloud', 'Cloud', ['AWS', 'Docker', 'Linux', 'CI/CD', 'Security', 'Zabbix'], [80, 85, 90, 75, 82, 88]);
-}
-
-function initNetwork() {
-  const container = document.getElementById('skillsNetwork');
-  if (!container) return;
-
-  const nodes = new vis.DataSet([
-    // Core Skills
-    { id: 1, label: 'Java', group: 'core' },
-    { id: 2, label: 'Spring Boot', group: 'core' },
-    { id: 3, label: 'Angular', group: 'core' },
-    { id: 4, label: 'React.js', group: 'core' },
-    { id: 5, label: 'Python', group: 'core' },
-    { id: 6, label: 'Solidity', group: 'core' },
-    { id: 7, label: 'PHP', group: 'core' },
-    { id: 8, label: 'TypeScript', group: 'core' },
-    
-    // Tools / Infra
-    { id: 10, label: 'AWS', group: 'tool' },
-    { id: 11, label: 'Docker', group: 'tool' },
-    { id: 12, label: 'Linux', group: 'tool' },
-    { id: 13, label: 'CI/CD', group: 'tool' },
-    { id: 14, label: 'Zabbix', group: 'tool' },
-    { id: 15, label: 'Git', group: 'tool' },
-    
-    // Data
-    { id: 20, label: 'PostgreSQL', group: 'data' },
-    { id: 21, label: 'MySQL', group: 'data' },
-    { id: 22, label: 'MongoDB', group: 'data' },
-    { id: 23, label: 'Power BI', group: 'data' },
-    { id: 24, label: 'RAG Systems', group: 'tool' }
-  ]);
-
-  const edges = new vis.DataSet([
-    { from: 1, to: 2 }, { from: 2, to: 8 }, { from: 3, to: 8 }, { from: 4, to: 8 },
-    { from: 2, to: 20 }, { from: 2, to: 21 }, { from: 1, to: 21 }, { from: 7, to: 21 },
-    { from: 10, to: 11 }, { from: 11, to: 12 }, { from: 10, to: 13 },
-    { from: 5, to: 24 }, { from: 2, to: 24 },
-    { from: 6, to: 8 }, { from: 10, to: 14 }, { from: 12, to: 14 }
-  ]);
-
-  const data = { nodes, edges };
-  const options = {
-    nodes: {
-      shape: 'dot',
-      size: 16,
-      font: { face: 'Share Tech Mono', color: '#e0e6ed', size: 12 },
-      borderWidth: 2,
-      shadow: true
-    },
-    edges: {
-      width: 1,
-      color: { color: 'rgba(126,184,247,0.3)', highlight: '#7eb8f7' },
-      smooth: { type: 'continuous' }
-    },
-    groups: {
-      core: { color: { background: '#0a0f18', border: '#7eb8f7' } },
-      tool: { color: { background: '#0a0f18', border: '#f0c0d8' } },
-      data: { color: { background: '#0a0f18', border: '#6040a8' } }
-    },
-    physics: {
-      forceAtlas2Based: { gravitationalConstant: -26, centralGravity: 0.005, springLength: 230, springConstant: 0.18 },
-      maxVelocity: 146,
-      solver: 'forceAtlas2Based',
-      timestep: 0.35,
-      stabilization: { iterations: 150 }
-    },
-    interaction: { hover: true, tooltipDelay: 200 }
-  };
-
-  network = new vis.Network(container, data, options);
-}
-
-document.querySelectorAll('.view-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const view = btn.dataset.view;
-    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    document.querySelectorAll('.skills-viz-container').forEach(c => c.classList.remove('active'));
-    document.getElementById(`skills${view.charAt(0).toUpperCase() + view.slice(1)}Container`).classList.add('active');
-    
-    if (view === 'network' && network) {
-      network.fit();
-    }
-  });
-});
-
-// Initialize on load
-document.addEventListener('DOMContentLoaded', () => {
-  initCharts();
-  initNetwork();
-});
-
 /* ── CURSOR & REACTIVE GRID ── */
 const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0,rot=0,lx=0,ly=0;
@@ -272,7 +69,7 @@ document.addEventListener('mousemove',e=>{
   requestAnimationFrame(tick);
 })();
 
-document.querySelectorAll('a,button,.skill-cat,.project-row,.cert-row,.gh-repo-card,.view-btn').forEach(el=>{
+document.querySelectorAll('a,button,.skill-cat,.project-row,.cert-row,.gh-repo-card').forEach(el=>{
   el.addEventListener('mouseenter',()=>{document.body.classList.add('cur-hover');});
   el.addEventListener('mouseleave',()=>{document.body.classList.remove('cur-hover');});
 });
@@ -321,23 +118,6 @@ function updateUptime(){
 }
 setInterval(updateUptime,1000);updateUptime();
 
-/* ── PARALLAX ── */
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffset;
-  
-  // Parallax for wings - moves slower than scroll
-  const wings = document.querySelector('.hero-wings');
-  if (wings) {
-    wings.style.transform = `translateY(calc(-50% + ${scrolled * 0.15}px))`;
-  }
-  
-  // Parallax for grid - moves very slowly
-  const grid = document.querySelector('.grid-bg');
-  if (grid) {
-    grid.style.transform = `translateY(${scrolled * 0.05}px)`;
-  }
-});
-
 /* ── SCROLL REVEAL ── */
 const flash=document.getElementById('impactFlash');
 const obs=new IntersectionObserver(entries=>{
@@ -355,39 +135,18 @@ const LC={JavaScript:'#f1e05a',TypeScript:'#3178c6',Java:'#b07219',PHP:'#4F5D95'
 
 /* ── PROJECTS DATA ── */
 const featured=[
-  {name:'devctl — Development Orchestrator',tags:['CLI','Automation','Python','Docker','WIP'],desc:'A unified CLI tool to automate the local development lifecycle. Orchestrates Spring Boot, Angular, and Vue.js environments with CRUD scaffolding and parallel process management.',langs:['Python','Shell'],url:'https://github.com/yss-ef/devctl---Local-Development-Orchestrator',live:null,wip:true,dossier:'dossiers/devctl.html'},
-  {name:'Mundia Library Management System',tags:['Next.js 15','React 19','Drizzle','MySQL','NextAuth'],desc:'Full-stack university library platform with student and admin portals. Features automated overdue reminders, book recommendations, and fine management.',langs:['TypeScript','SQL'],url:'https://github.com/AnouarMohamed/Mundia_library',live:null,dossier:'dossiers/mundia-library.html'},
+  {name:'devctl — Development Orchestrator',tags:['CLI','Automation','Python','Docker','WIP'],desc:'A unified CLI tool to automate the local development lifecycle. Orchestrates Spring Boot, Angular, and Vue.js environments with CRUD scaffolding and parallel process management.',langs:['Python','Shell'],url:'https://github.com/yss-ef/devctl---Local-Development-Orchestrator',live:null,wip:true},
+  {name:'Mundia Library Management System',tags:['Next.js 15','React 19','Drizzle','MySQL','NextAuth'],desc:'Full-stack university library platform with student and admin portals. Features automated overdue reminders, book recommendations, and fine management.',langs:['TypeScript','SQL'],url:'https://github.com/AnouarMohamed/Mundia_library',live:null},
   {name:'CRM SaaS Platform',tags:['SaaS','CRM','AI','Angular','Spring Boot'],desc:'Full CRM SaaS built from scratch at Broker Immobilier. Angular + Spring Boot, RAG system, and automated document generation.',langs:['Java','TypeScript'],url:null,live:null},
-  {name:'Smart Digital Banking System',tags:['FinTech','JWT','RAG','REST API'],desc:'Spring Boot REST API with JWT/RBAC, AI-powered RAG assistant for customer support, Angular dashboard with ChartJS.',langs:['Java','TypeScript'],url:'https://github.com/yss-ef/DIGITAL-BANKING-SYSTEM',live:null,dossier:'dossiers/banking-system.html'},
-  {name:'Cloud Infrastructure Supervision',tags:['AWS','Zabbix','Linux','Monitoring'],desc:'Infrastructure monitoring using Zabbix on AWS, Linux and Windows servers — system health, alerts, and performance metrics.',langs:['Shell'],url:'https://github.com/yss-ef/AWS-ZABBIX-MONITORING',live:null,dossier:'dossiers/aws-zabbix.html'},
-  {name:'Decentralized E-Learning Platform',tags:['Web3','Ethereum','IPFS','DApp'],desc:'Solidity Smart Contracts on Ethereum, React.js frontend, Web3.js integration. Final-year project at FST Errachidia.',langs:['Solidity','JavaScript'],url:'https://github.com/yss-ef/Academic-Repository-Blockchain',live:null,dossier:'dossiers/blockchain-elearning.html'},
-  {name:'Mobile Portfolio App',tags:['Mobile','Flutter','UI'],desc:'Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:'https://github.com/yss-ef/FLUTTER-INTERACTIVE-PORTFOLIO',live:null,dossier:'dossiers/flutter-portfolio.html'},
-  {name:'Dolibarr ERP Custom Modules',tags:['ERP','Treasury','Tax','PDF'],desc:'4 custom modules for Dolibarr ERP — Treasury & Tax management, workflow automation, and query performance optimization.',langs:['PHP','SQL'],url:'https://github.com/yss-ef/Dolibarr-Custom-Modules',live:null,dossier:'dossiers/dolibarr-modules.html'},
+  {name:'Smart Digital Banking System',tags:['FinTech','JWT','RAG','REST API'],desc:'Spring Boot REST API with JWT/RBAC, AI-powered RAG assistant for customer support, Angular dashboard with ChartJS.',langs:['Java','TypeScript'],url:'https://github.com/yss-ef/DIGITAL-BANKING-SYSTEM',live:null},
+  {name:'Cloud Infrastructure Supervision',tags:['AWS','Zabbix','Linux','Monitoring'],desc:'Infrastructure monitoring using Zabbix on AWS, Linux and Windows servers — system health, alerts, and performance metrics.',langs:['Shell'],url:'https://github.com/yss-ef/AWS-ZABBIX-MONITORING',live:null},
+  {name:'Decentralized E-Learning Platform',tags:['Web3','Ethereum','IPFS','DApp'],desc:'Solidity Smart Contracts on Ethereum, React.js frontend, Web3.js integration. Final-year project at FST Errachidia.',langs:['Solidity','JavaScript'],url:'https://github.com/yss-ef/Academic-Repository-Blockchain',live:null},
+  {name:'Mobile Portfolio App',tags:['Mobile','Flutter','UI'],desc:'Flutter mobile application showcasing projects, skills, and experience in a clean native mobile interface.',langs:['Dart'],url:'https://github.com/yss-ef/FLUTTER-INTERACTIVE-PORTFOLIO',live:null},
+  {name:'Dolibarr ERP Custom Modules',tags:['ERP','Treasury','Tax','PDF'],desc:'4 custom modules for Dolibarr ERP — Treasury & Tax management, workflow automation, and query performance optimization.',langs:['PHP','SQL'],url:'https://github.com/yss-ef/Dolibarr-Custom-Modules',live:null},
   {name:'Firewall Configuration — OPNsense',tags:['Security','Networking','VLANs'],desc:'OPNsense firewall with custom rules, VLANs, and network segmentation to secure a simulated enterprise infrastructure.',langs:['Shell'],url:null,live:null}
 ];
 
 let activeFilter='all';
-
-/* ── DOSSIER MODAL LOGIC ── */
-const dModal = document.getElementById('dossierModal');
-const dFrame = document.getElementById('dossierFrame');
-const dClose = document.getElementById('closeDossier');
-
-function openDossier(path) {
-  if(!path) return;
-  dFrame.src = path;
-  dModal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeDossier() {
-  dModal.classList.remove('active');
-  dFrame.src = '';
-  document.body.style.overflow = '';
-}
-
-if(dClose) dClose.addEventListener('click', closeDossier);
-if(dModal) dModal.querySelector('.dossier-modal-backdrop').addEventListener('click', closeDossier);
 
 function renderFeatured(){
   const grid=document.getElementById('projectsGrid');
@@ -397,7 +156,6 @@ function renderFeatured(){
     const langDots=p.langs.map(l=>`<span class="pr-lang-tag"><span class="lang-dot-sm" style="background:${LC[l]||'#888'}"></span>${l}</span>`).join('');
     const tagPills=p.tags.map(t=>`<span class="pr-tag">${t}</span>`).join('');
     const links=[];
-    if(p.dossier) links.push(`<button onclick="openDossier('${p.dossier}')" class="pr-link pr-link-live"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg> Dossier</button>`);
     if(p.url) links.push(`<a href="${p.url}" target="_blank" class="pr-link pr-link-gh"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> Code</a>`);
     if(p.live) links.push(`<a href="${p.live}" target="_blank" class="pr-link pr-link-live"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg> Live</a>`);
     
