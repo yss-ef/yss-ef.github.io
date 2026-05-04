@@ -45,6 +45,148 @@ if (bootScreen) {
   runBoot();
 }
 
+/* ── SKILLS VISUALIZATION ── */
+let network = null;
+const charts = [];
+
+function initCharts() {
+  const commonOptions = {
+    scales: {
+      r: {
+        angleLines: { color: 'rgba(126,184,247,0.1)' },
+        grid: { color: 'rgba(126,184,247,0.1)' },
+        pointLabels: { color: '#64748b', font: { family: 'Share Tech Mono', size: 10 } },
+        ticks: { display: false, maxTicksLimit: 5 },
+        suggestedMin: 0,
+        suggestedMax: 100
+      }
+    },
+    plugins: { legend: { display: false } },
+    responsive: true,
+    maintainAspectRatio: false
+  };
+
+  const createRadar = (id, label, labels, data) => {
+    const ctx = document.getElementById(id);
+    if (!ctx) return;
+    charts.push(new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels,
+        datasets: [{
+          label,
+          data,
+          backgroundColor: 'rgba(126,184,247,0.15)',
+          borderColor: '#7eb8f7',
+          borderWidth: 1.5,
+          pointBackgroundColor: '#7eb8f7',
+          pointBorderColor: '#0a0f18',
+          pointHoverBackgroundColor: '#fff',
+          pointRadius: 2
+        }]
+      },
+      options: commonOptions
+    }));
+  };
+
+  createRadar('radarBackend', 'Backend', ['Java', 'Spring', 'PHP', 'Node.js', 'Python', 'Solidity'], [95, 90, 85, 80, 85, 75]);
+  createRadar('radarFrontend', 'Frontend', ['Angular', 'React', 'Flutter', 'TypeScript', 'Tailwind', 'Web3.js'], [92, 85, 80, 90, 85, 70]);
+  createRadar('radarData', 'Data', ['PostgreSQL', 'MySQL', 'MongoDB', 'Power BI', 'PL/SQL', 'Hibernate'], [85, 88, 75, 82, 80, 85]);
+  createRadar('radarCloud', 'Cloud', ['AWS', 'Docker', 'Linux', 'CI/CD', 'Security', 'Zabbix'], [80, 85, 90, 75, 82, 88]);
+}
+
+function initNetwork() {
+  const container = document.getElementById('skillsNetwork');
+  if (!container) return;
+
+  const nodes = new vis.DataSet([
+    // Core Skills
+    { id: 1, label: 'Java', group: 'core' },
+    { id: 2, label: 'Spring Boot', group: 'core' },
+    { id: 3, label: 'Angular', group: 'core' },
+    { id: 4, label: 'React.js', group: 'core' },
+    { id: 5, label: 'Python', group: 'core' },
+    { id: 6, label: 'Solidity', group: 'core' },
+    { id: 7, label: 'PHP', group: 'core' },
+    { id: 8, label: 'TypeScript', group: 'core' },
+    
+    // Tools / Infra
+    { id: 10, label: 'AWS', group: 'tool' },
+    { id: 11, label: 'Docker', group: 'tool' },
+    { id: 12, label: 'Linux', group: 'tool' },
+    { id: 13, label: 'CI/CD', group: 'tool' },
+    { id: 14, label: 'Zabbix', group: 'tool' },
+    { id: 15, label: 'Git', group: 'tool' },
+    
+    // Data
+    { id: 20, label: 'PostgreSQL', group: 'data' },
+    { id: 21, label: 'MySQL', group: 'data' },
+    { id: 22, label: 'MongoDB', group: 'data' },
+    { id: 23, label: 'Power BI', group: 'data' },
+    { id: 24, label: 'RAG Systems', group: 'tool' }
+  ]);
+
+  const edges = new vis.DataSet([
+    { from: 1, to: 2 }, { from: 2, to: 8 }, { from: 3, to: 8 }, { from: 4, to: 8 },
+    { from: 2, to: 20 }, { from: 2, to: 21 }, { from: 1, to: 21 }, { from: 7, to: 21 },
+    { from: 10, to: 11 }, { from: 11, to: 12 }, { from: 10, to: 13 },
+    { from: 5, to: 24 }, { from: 2, to: 24 },
+    { from: 6, to: 8 }, { from: 10, to: 14 }, { from: 12, to: 14 }
+  ]);
+
+  const data = { nodes, edges };
+  const options = {
+    nodes: {
+      shape: 'dot',
+      size: 16,
+      font: { face: 'Share Tech Mono', color: '#e0e6ed', size: 12 },
+      borderWidth: 2,
+      shadow: true
+    },
+    edges: {
+      width: 1,
+      color: { color: 'rgba(126,184,247,0.3)', highlight: '#7eb8f7' },
+      smooth: { type: 'continuous' }
+    },
+    groups: {
+      core: { color: { background: '#0a0f18', border: '#7eb8f7' } },
+      tool: { color: { background: '#0a0f18', border: '#f0c0d8' } },
+      data: { color: { background: '#0a0f18', border: '#6040a8' } }
+    },
+    physics: {
+      forceAtlas2Based: { gravitationalConstant: -26, centralGravity: 0.005, springLength: 230, springConstant: 0.18 },
+      maxVelocity: 146,
+      solver: 'forceAtlas2Based',
+      timestep: 0.35,
+      stabilization: { iterations: 150 }
+    },
+    interaction: { hover: true, tooltipDelay: 200 }
+  };
+
+  network = new vis.Network(container, data, options);
+}
+
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const view = btn.dataset.view;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    document.querySelectorAll('.skills-viz-container').forEach(c => c.classList.remove('active'));
+    document.getElementById(`skills${view.charAt(0).toUpperCase() + view.slice(1)}Container`).classList.add('active');
+    
+    if (view === 'network' && network) {
+      network.fit();
+    }
+  });
+});
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+  initCharts();
+  initNetwork();
+});
+
 /* ── CURSOR & REACTIVE GRID ── */
 const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0,rot=0,lx=0,ly=0;
@@ -69,7 +211,7 @@ document.addEventListener('mousemove',e=>{
   requestAnimationFrame(tick);
 })();
 
-document.querySelectorAll('a,button,.skill-cat,.project-row,.cert-row,.gh-repo-card').forEach(el=>{
+document.querySelectorAll('a,button,.skill-cat,.project-row,.cert-row,.gh-repo-card,.view-btn').forEach(el=>{
   el.addEventListener('mouseenter',()=>{document.body.classList.add('cur-hover');});
   el.addEventListener('mouseleave',()=>{document.body.classList.remove('cur-hover');});
 });
@@ -117,6 +259,23 @@ function updateUptime(){
   if(el)el.textContent=h+':'+m+':'+sc;
 }
 setInterval(updateUptime,1000);updateUptime();
+
+/* ── PARALLAX ── */
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  
+  // Parallax for wings - moves slower than scroll
+  const wings = document.querySelector('.hero-wings');
+  if (wings) {
+    wings.style.transform = `translateY(calc(-50% + ${scrolled * 0.15}px))`;
+  }
+  
+  // Parallax for grid - moves very slowly
+  const grid = document.querySelector('.grid-bg');
+  if (grid) {
+    grid.style.transform = `translateY(${scrolled * 0.05}px)`;
+  }
+});
 
 /* ── SCROLL REVEAL ── */
 const flash=document.getElementById('impactFlash');

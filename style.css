@@ -72,10 +72,11 @@ body::after{
     rgba(0,0,0,var(--scanline-op)) 2px,rgba(0,0,0,var(--scanline-op)) 4px);
 }
 .grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
+  position:fixed;inset:-50px;z-index:0;pointer-events:none;
   background-image:linear-gradient(var(--border) 1px,transparent 1px),
     linear-gradient(90deg,var(--border) 1px,transparent 1px);
   background-size:48px 48px;opacity:.6;transition:opacity .35s;
+  will-change: transform;
 }
 
 /* ═══ CURSOR ═══ */
@@ -203,7 +204,10 @@ nav{
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes blink-cur{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
-@keyframes float-up{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes float-up{
+  0%,100%{margin-top:0}
+  50%{margin-top:-10px}
+}
 @keyframes scan-line{0%{transform:translateY(-100%)}100%{transform:translateY(110vh)}}
 @keyframes dots-anim{0%{content:'.'}33%{content:'..'}66%{content:'...'}}
 
@@ -222,7 +226,13 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 
 /* ═══ HERO ═══ */
 #hero{min-height:100vh;display:grid;grid-template-columns:1fr 320px;gap:3rem;align-items:center;padding:9rem 3rem 5rem;position:relative;overflow:hidden;}
-.hero-wings{position:absolute;top:50%;right:280px;transform:translateY(-50%);opacity:.03;pointer-events:none;font-size:18rem;line-height:1;animation:float-up 8s ease-in-out infinite;color:var(--accent);user-select:none;z-index:1;}
+.hero-wings{
+  position:absolute;top:50%;right:280px;
+  transform:translateY(calc(-50% + var(--wings-y, 0px)));
+  opacity:.03;pointer-events:none;font-size:18rem;line-height:1;
+  animation:float-up 8s ease-in-out infinite;color:var(--accent);
+  user-select:none;z-index:1;will-change: transform;
+}
 .hero-scan{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1;}
 .hero-scan::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.15;animation:scan-line 9s linear infinite;}
 .hero-content{position:relative;z-index:2;}
@@ -292,6 +302,23 @@ section{padding:7rem 3rem;position:relative;z-index:2;}
 .info-value a:hover{color:var(--accent);}
 .status-dot{display:inline-flex;align-items:center;gap:7px;}
 .status-dot::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse-dot 2.2s infinite;box-shadow:0 0 8px var(--green);}
+
+/* ═══ SKILLS VIZ ═══ */
+.skills-view-controls{display:flex;justify-content:center;gap:.75rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+.view-btn{background:var(--surface);border:1px solid var(--border);color:var(--text3);padding:.6rem 1.2rem;font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.view-btn.active,.view-btn:hover{border-color:var(--accent);color:var(--text);background:var(--surface2);box-shadow:var(--glow-b);}
+
+.skills-viz-container{display:none;min-height:400px;animation:fadeUp .4s ease both;}
+.skills-viz-container.active{display:block;}
+
+.radar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
+.radar-item{background:var(--surface);border:1px solid var(--border);padding:1.5rem;position:relative;display:flex;align-items:center;justify-content:center;min-height:320px;}
+.radar-item::before{content:'';position:absolute;top:0;left:0;width:10px;height:10px;border-top:1px solid var(--accent);border-left:1px solid var(--accent);opacity:.4;}
+
+#skillsNetwork{width:100%;height:600px;background:var(--surface);border:1px solid var(--border);position:relative;}
+.network-legend{display:flex;justify-content:center;gap:1.5rem;margin-top:1rem;font-size:.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;}
+.legend-item{display:flex;align-items:center;gap:6px;}
+.legend-item .dot{width:8px;height:8px;border-radius:50%;}
 
 /* ═══ SKILLS ═══ */
 #skills{background:var(--bg);}
@@ -587,6 +614,6 @@ footer{padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justi
 /* ═══ GLASSMORPHISM UPGRADE ═══ */
 nav { backdrop-filter: blur(20px) saturate(180%); }
 .dossier { 
-  background: var(--glass-bg); backdrop-filter: blur(12px); 
+  background: var(--surface); backdrop-filter: blur(12px); 
   border: 1px solid var(--border2); 
 }
