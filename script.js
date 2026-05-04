@@ -325,13 +325,13 @@ setInterval(updateUptime,1000);updateUptime();
 window.addEventListener('scroll', () => {
   const scrolled = window.pageYOffset;
   
-  // Parallax for wings - moves slower than scroll
+  // Parallax for wings - centered
   const wings = document.querySelector('.hero-wings');
   if (wings) {
-    wings.style.transform = `translateY(calc(-50% + ${scrolled * 0.15}px))`;
+    wings.style.setProperty('--wings-y', (scrolled * 0.15) + 'px');
   }
   
-  // Parallax for grid - moves very slowly
+  // Parallax for grid
   const grid = document.querySelector('.grid-bg');
   if (grid) {
     grid.style.transform = `translateY(${scrolled * 0.05}px)`;
